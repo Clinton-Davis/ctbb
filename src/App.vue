@@ -10,10 +10,11 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Bangers|Montserrat:400,700,800&display=swap");
+/* @import url("https://fonts.googleapis.com/css?family=Bangers|Montserrat:400,700,800&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&family=Montserrat:wght@200;400;600;900&display=swap");
 
 :root {
-  --Bangers: "Bangers", sans-serif;
+  --Bangers: "Goldman", sans-serif;
   --Montserrat: "Montserrat", sans-serif;
   --white: rgb(219, 217, 217);
 }

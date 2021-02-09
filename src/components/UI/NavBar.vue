@@ -1,18 +1,26 @@
 <template>
   <header>
     <nav>
-      <img
-        src="../../assets/image/tableMountainIconsmalltranparntRounded.png"
-        id="tableIcon"
-        title="'Click' Back to Main Page"
-        alt="table Mountain Icons"
-        class="pointer"
-      />
       <ul class="weather_api">
+        <img
+          src="../../assets/image/tableMountainIconsmalltranparntRounded.png"
+          id="tableIcon"
+          title="'Click' Back to Main Page"
+          alt="table Mountain Icons"
+          class="pointer"
+        />
         <li><small>Feels Like </small>{{ feels_like }}˚C</li>
 
-        <li>{{ wind }} <small>Kph</small></li>
-        <li><img src="" alt="" /></li>
+        <img
+          id="windsock"
+          src="../../assets/image/icons8-wind-sock20.png"
+          alt=""
+        />
+        <li>
+          {{ wind }}
+          <small>Kph</small>
+        </li>
+
         <li>{{ dir }}</li>
       </ul>
 
@@ -130,6 +138,7 @@ export default {
 header {
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
   background-color: transparent;
+  font-size: 1.3rem;
 }
 nav {
   min-height: 10vh;
@@ -142,13 +151,24 @@ nav {
 }
 img {
   margin: 1rem;
+  vertical-align: super;
 }
 ul {
   display: flex;
   margin: 1rem;
 }
 li {
+  font-family: var(--Bangers);
   list-style: none;
-  margin: 0 1rem;
+  margin: auto 0.5rem;
+}
+a {
+  text-decoration: none;
+  color: var(--white);
+  font-family: inherit;
+}
+#windsock {
+  margin-right: -0.1rem;
+  padding-bottom: 11px;
 }
 </style>

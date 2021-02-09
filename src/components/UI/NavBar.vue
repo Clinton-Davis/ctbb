@@ -155,10 +155,10 @@ img {
 }
 ul {
   display: flex;
-  margin: 1rem;
+  margin: 1rem 5rem 1rem 0;
 }
 li {
-  font-family: var(--Bangers);
+  font-family: var(--Goldman);
   list-style: none;
   margin: auto 0.5rem;
 }

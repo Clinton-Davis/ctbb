@@ -4,10 +4,6 @@
   </button>
 </template>
 
-<script>
-export default {};
-</script>
-
 <style scoped>
 button {
   letter-spacing: 0.1rem;
@@ -48,7 +44,7 @@ button {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#cedbe9+0,aac5de+17,6199c7+50,3a84c3+51,419ad6+59,4bb8f0+71,3a8bc2+84,26558b+100;Blue+Gloss */
 }
 button:hover {
-  transform: scale(1.1);
+  color: green;
 }
 button:active {
   transform: scale(0.8);

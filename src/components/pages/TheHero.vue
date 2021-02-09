@@ -3,7 +3,7 @@
     <div class="hero__content">
       <h1 id="capeTown">CAPE TOWNS</h1>
       <h2 id="bestBits">BEST BITS</h2>
-      <h3 id="diy">Do It Your Self</h3>
+      <h3 id="diy">Self Guided Tours</h3>
       <h4>Pick your Pleasure</h4>
       <div class="hero_btn_btns-wrapper">
         <base-button>Sights Seeing</base-button>
@@ -39,7 +39,7 @@ export default {};
 .hero__content h4 {
   margin: 1rem 0 -1rem 0;
   font-size: 2rem;
-  text-shadow: 3px 5px 2px #050505;
+  text-shadow: 3px 5px 2px #09587c;
 }
 .hero_btn_btns-wrapper {
   width: 80%;
@@ -53,24 +53,13 @@ export default {};
   font-family: var(--Bangers);
   color: transparent;
   letter-spacing: 0.5rem;
-  background-size: 150%;
+  background-size: 100%;
   background-clip: text;
+  background-position: 100% 100%;
   -webkit-background-clip: text;
   background-image: url("../../assets/image/sunnyBackgroundCrop.jpg");
-  animation: bg-animation 60s linear infinite alternate;
-  -webkit-animation: bg-animation 60s linear infinite alternate;
 }
-@keyframes bg-animation {
-  0% {
-    background-position: left;
-  }
-  50% {
-    background-position: right;
-  }
-  100% {
-    background-position: left;
-  }
-}
+
 #bestBits {
   font-size: 6rem;
   letter-spacing: 0.4rem;
@@ -78,28 +67,18 @@ export default {};
   color: transparent;
   background-size: 100%;
   background-clip: text;
+  background-position: 100% 100%;
   -webkit-background-clip: text;
   background-image: url("../../assets/image/orangeYelloSunSetNarrow.jpg");
-  animation: bg-animationTB 60s linear infinite alternate;
-  -webkit-animation: bg-animationTB 60s linear infinite alternate;
 }
-@keyframes bg-animationTB {
-  0% {
-    background-position: bottom;
-  }
 
-  100% {
-    background-position: top;
-  }
-}
 #diy {
   font-size: 3.5rem;
   color: transparent;
-  background-size: 200%;
+  background-size: 100%;
   background-clip: text;
+  background-position: 100% 20%;
   -webkit-background-clip: text;
   background-image: url("../../assets/image/BigBlueOceanLiternt.jpg");
-  animation: bg-animation 60s linear infinite alternate;
-  -webkit-animation: bg-animation 60s linear infinite alternate;
 }
 </style>

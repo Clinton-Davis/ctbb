@@ -27,9 +27,6 @@ export default {};
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
-  /* background-color: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(5px); */
 }
 .hero__content {
   margin-top: 2rem;

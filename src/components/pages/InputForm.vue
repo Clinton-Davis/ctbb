@@ -5,7 +5,7 @@
         <div v-if="invalidInput" class="Error">
           <p>Error Please Check inputs</p>
         </div>
-        <form @submit.prevent="submitForm">
+        <form @submit.prevent="formValidaty">
           <div class="form-control">
             <label for="name">Name:</label>
             <input type="text" name="name" id="name" v-model.trim="name" />
@@ -62,7 +62,7 @@ export default {
     };
   },
   methods: {
-    submitForm() {
+    formValidaty() {
       if (
         this.name === "" &&
         this.category === "" &&
@@ -74,8 +74,10 @@ export default {
         return;
       }
       this.invalidInput = false;
+      this.submitForm();
+    },
+    submitForm() {
       this.error = null;
-
       fetch(
         "https://best-bits-1579528051004-default-rtdb.firebaseio.com/activities.json",
         {

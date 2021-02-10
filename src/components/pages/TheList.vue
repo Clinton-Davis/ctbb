@@ -1,6 +1,13 @@
 <template>
   <div class="list__container">
-    <ListCard />
+    <ListCard
+      v-for="tour in filteredList"
+      :key="tour.id"
+      :name="tour.name"
+      :info="tour.info"
+      :category="tour.category"
+      :src="tour.imageUrl"
+    />
   </div>
 </template>
 
@@ -13,8 +20,21 @@ export default {
       results: [],
     };
   },
+  computed: {
+    filteredList() {
+      const things = this.$store.getters["activites/getActivities"];
+      console.log(things);
+      return things;
+    },
+  },
   methods: {},
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.list__container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+</style>

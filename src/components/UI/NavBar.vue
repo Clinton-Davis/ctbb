@@ -28,6 +28,7 @@
         </li>
 
         <li v-if="haveWeather">{{ getWindDirection }}</li>
+        <li><base-button mode="small">Weather Report</base-button></li>
       </ul>
 
       <ul class="nav">

@@ -1,11 +1,19 @@
 <template>
-  <button to="/list">
+  <button :class="mode">
     <slot></slot>
   </button>
 </template>
-
+<script>
+export default {
+  props: ["mode"],
+};
+</script>
 <style scoped>
 button {
+  cursor: pointer;
+  border-radius: 10px;
+}
+.full {
   letter-spacing: 0.1rem;
   font-family: var(--Goldman);
   color: #072ff7;
@@ -13,8 +21,6 @@ button {
   padding: 0.5rem 1rem;
   min-width: 10rem;
   margin: 0 1rem;
-  cursor: pointer;
-  border-radius: 10px;
   box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
   -webkit-box-shadow: 0px 10px 13px -7px #000000,
     5px 5px 15px 5px rgba(0, 0, 0, 0);
@@ -48,5 +54,18 @@ button:hover {
 }
 button:active {
   transform: scale(0.8);
+}
+.small {
+  padding: 0.25rem 0.5rem;
+  background-color: transparent;
+  color: white;
+  border: 1px white solid;
+}
+.small:hover {
+  /* border-color: black; */
+  color: white;
+  box-shadow: 0px 10px 13px -5px #000000, 5px 5px 15px 3px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
 }
 </style>

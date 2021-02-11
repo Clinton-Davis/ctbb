@@ -6,11 +6,15 @@
       <h3 id="diy">Self Guided Tours</h3>
       <h4>Pick your Pleasure</h4>
       <div class="hero_btn_btns-wrapper">
-        <base-button @click="getCategory('sight_seeing')"
+        <base-button mode="full" @click="getCategory('sight_seeing')"
           >Sights Seeing</base-button
         >
-        <base-button @click="getCategory('adventure')">Adventure</base-button>
-        <base-button @click="getCategory('foodie')">Foodies</base-button>
+        <base-button mode="full" @click="getCategory('adventure')"
+          >Adventure</base-button
+        >
+        <base-button mode="full" @click="getCategory('foodie')"
+          >Foodies</base-button
+        >
       </div>
     </div>
   </div>

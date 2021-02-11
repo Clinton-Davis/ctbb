@@ -7,7 +7,7 @@
 <style scoped>
 button {
   letter-spacing: 0.1rem;
-  font-family: var(--Bangers);
+  font-family: var(--Goldman);
   color: #072ff7;
   font-size: 1.1rem;
   padding: 0.5rem 1rem;

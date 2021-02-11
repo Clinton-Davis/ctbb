@@ -1,7 +1,7 @@
 <template>
   <div class="list__container">
     <ListCard
-      v-for="tour in selectedList"
+      v-for="tour in loadActivities"
       :key="tour.id"
       :name="tour.name"
       :info="tour.info"
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ListCard from "../UI/ListCard.vue";
 export default {
   components: { ListCard },
@@ -21,17 +22,19 @@ export default {
     };
   },
   created() {
-    this.loadActivities();
+    this.loadTours();
   },
 
   computed: {
-    selectedList() {
-      const items = this.$store.getters["activites/loadActivities"];
-      return items;
-    },
+    ...mapGetters("activites", ["loadActivities"]),
+
+    // selectedList() {
+    // const items = this.$store.getters["activites/loadActivities"];
+    // return items;
+    // },
   },
   methods: {
-    loadActivities() {
+    loadTours() {
       this.$store.dispatch("activites/loadActivities");
     },
   },

@@ -6,7 +6,7 @@ export default {
   namespaced: true,
   state() {
     return {
-      feelsLike: null,
+      feels_like: null,
       wind: null,
       direction: null,
       temp: null,

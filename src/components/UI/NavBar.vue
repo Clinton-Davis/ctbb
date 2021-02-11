@@ -11,7 +11,7 @@
             class="pointer"
           />
         </router-link>
-        <li v-if="!haveWeather">Looking at the Weather...</li>
+        <li v-if="!haveWeather">Checking the Weather...</li>
         <li v-else>
           <small>Feels Like </small>{{ getWeatherData.feels_like }}˚C
         </li>
@@ -27,7 +27,7 @@
           <small>Kph</small>
         </li>
 
-        <li>{{ dir }}</li>
+        <li v-if="haveWeather">{{ getWindDirection }}</li>
       </ul>
 
       <ul class="nav">
@@ -45,7 +45,8 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      haveWeather: true,
+      haveWeather: false,
+      feels_like: null,
     };
   },
   created() {
@@ -57,9 +58,16 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("weather", ["getWeatherData"]),
+    ...mapGetters("weather", ["getWeatherData", "getWindDirection"]),
   },
-  watch: {},
+  watch: {
+    getWeatherData() {
+      this.haveWeather = false;
+      if (this.getWeatherData !== "") {
+        this.haveWeather = true;
+      }
+    },
+  },
 };
 </script>
 

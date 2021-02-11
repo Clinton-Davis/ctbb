@@ -6,7 +6,15 @@ export default {
   namespaced: true,
   state() {
     return {
-      weather: [],
+      feelsLike: null,
+      wind: null,
+      direction: null,
+      temp: null,
+      tempsMax: null,
+      tempMin: null,
+      humidity: null,
+      cloudDiscrition: "",
+      pressure: null,
     };
   },
   mutations,

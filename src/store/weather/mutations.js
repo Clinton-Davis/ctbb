@@ -1,1 +1,5 @@
-export default {};
+export default {
+  loadWeather(state, payload) {
+    state.weather = payload;
+  },
+};

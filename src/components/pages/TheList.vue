@@ -1,7 +1,7 @@
 <template>
   <div class="list__container">
     <ListCard
-      v-for="tour in filteredList"
+      v-for="tour in selectedList"
       :key="tour.id"
       :name="tour.name"
       :info="tour.info"
@@ -20,14 +20,21 @@ export default {
       results: [],
     };
   },
+  created() {
+    this.loadActivities();
+  },
+
   computed: {
-    filteredList() {
-      const things = this.$store.getters["activites/getActivities"];
-      console.log(things);
-      return things;
+    selectedList() {
+      const items = this.$store.getters["activites/loadActivities"];
+      return items;
     },
   },
-  methods: {},
+  methods: {
+    loadActivities() {
+      this.$store.dispatch("activites/loadActivities");
+    },
+  },
 };
 </script>
 

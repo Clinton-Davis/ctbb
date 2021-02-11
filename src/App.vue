@@ -1,7 +1,7 @@
 <template>
   <main>
     <nav-bar></nav-bar>
-    <router-view></router-view>
+    <router-view @category="getCategory"></router-view>
   </main>
 </template>
 
@@ -9,6 +9,16 @@
 export default {
   name: "App",
   components: {},
+  data() {
+    return {
+      category: "",
+    };
+  },
+  methods: {
+    getCategory(category) {
+      this.category = category;
+    },
+  },
 };
 </script>
 

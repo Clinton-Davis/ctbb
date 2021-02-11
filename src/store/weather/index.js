@@ -6,8 +6,7 @@ export default {
   namespaced: true,
   state() {
     return {
-      activities: [],
-      category: "",
+      weather: [],
     };
   },
   mutations,

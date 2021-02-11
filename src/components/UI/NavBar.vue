@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav>
-      <ul class="weather_api">
+      <ul class="headerUL">
         <router-link to="/">
           <img
             src="../../assets/image/tableMountainIconsmalltranparntRounded.png"
@@ -28,10 +28,14 @@
         </li>
 
         <li v-if="haveWeather">{{ getWindDirection }}</li>
-        <li><base-button mode="small">Weather Report</base-button></li>
+        <li>
+          <base-button @click="openWeather" mode="small"
+            >Weather Report</base-button
+          >
+        </li>
       </ul>
 
-      <ul class="nav">
+      <ul class="headerUL">
         <li class="pointer" id="about">About Us</li>
         <li class="pointer links">
           <a href="./form.html" id="contact" class="banger">Get In Touch</a>
@@ -39,21 +43,58 @@
       </ul>
     </nav>
   </header>
+  <weather-modal :open="openModal" @close="closeModal">
+    <template v-slot:temp>
+      <ul class="modalUl">
+        <li>Current Temp: <br />{{ getWeatherData.temp }}˚C</li>
+        <li>
+          Feels Like: <br />
+          {{ getWeatherData.feels_like }}˚C
+        </li>
+        <li>Max: <br />{{ getWeatherData.tempsMax }}˚C</li>
+        <li>Min: <br />{{ getWeatherData.tempMin }}˚C</li>
+      </ul>
+    </template>
+    <template v-slot:wind>
+      <ul class="modalUl">
+        <li>Wind Streanth: <br />{{ getWeatherData.wind }} Kph</li>
+        <li>Wind Direction: <br />{{ getWindDirection }}</li>
+      </ul>
+    </template>
+    <template v-slot:cloud>
+      <ul class="modalUl">
+        <li>Humidity: <br />{{ getWeatherData.humidity }}%</li>
+        <li>
+          Air Pressure: <br />{{ getWeatherData.pressure }} <small>Atm's</small>
+        </li>
+        <li>Cloud: <br />{{ getWeatherData.cloudDiscrition }}</li>
+      </ul>
+    </template>
+  </weather-modal>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import WeatherModal from "./WeatherModal.vue";
 export default {
+  components: { WeatherModal },
   data() {
     return {
       haveWeather: false,
       feels_like: null,
+      openModal: false,
     };
   },
   created() {
     this.loadWeather();
   },
   methods: {
+    openWeather() {
+      this.openModal = true;
+    },
+    closeModal() {
+      this.openModal = false;
+    },
     loadWeather() {
       this.$store.dispatch("weather/loadWeather");
     },
@@ -83,6 +124,7 @@ nav {
   margin: auto;
   width: 100%;
   display: flex;
+  /* flex-direction: row; */
   align-items: center;
   justify-content: space-between;
   color: var(--white);
@@ -91,14 +133,22 @@ img {
   margin: 1rem;
   vertical-align: super;
 }
-ul {
+
+.headerUL {
   display: flex;
   margin: 1rem 5rem 1rem 0;
+}
+.modalUl {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  text-align: center;
 }
 li {
   font-family: var(--Goldman);
   list-style: none;
   margin: auto 0.5rem;
+  /* text-align: ; */
 }
 a {
   text-decoration: none;
@@ -108,5 +158,8 @@ a {
 #windsock {
   margin-right: -0.1rem;
   padding-bottom: 11px;
+}
+template ul {
+  width: 100%;
 }
 </style>

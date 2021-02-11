@@ -6,11 +6,15 @@
       <h3 id="diy">Self Guided Tours</h3>
       <h4>Pick your Pleasure</h4>
       <div class="hero_btn_btns-wrapper">
-        <base-button @click="getCategory('sight_seeing')"
+        <base-button mode="full" @click="getCategory('sight_seeing')"
           >Sights Seeing</base-button
         >
-        <base-button @click="getCategory('adventure')">Adventure</base-button>
-        <base-button @click="getCategory('foodie')">Foodies</base-button>
+        <base-button mode="full" @click="getCategory('adventure')"
+          >Adventure</base-button
+        >
+        <base-button mode="full" @click="getCategory('foodie')"
+          >Foodies</base-button
+        >
       </div>
     </div>
   </div>
@@ -56,16 +60,17 @@ export default {
 }
 .hero_btn_btns-wrapper {
   width: 80%;
-  margin: 2rem;
+  margin: 2rem auto;
   display: flex;
   justify-content: space-evenly;
 }
 
 #capeTown {
   font-size: 8rem;
-  font-family: var(--Bangers);
+  font-family: var(--Goldman);
+
   color: transparent;
-  letter-spacing: 0.5rem;
+  font-weight: 700;
   background-size: 100%;
   background-clip: text;
   background-position: 100% 100%;
@@ -75,8 +80,9 @@ export default {
 
 #bestBits {
   font-size: 6rem;
-  letter-spacing: 0.4rem;
-  font-family: var(--Bangers);
+  font-weight: 700;
+  margin-top: -1rem;
+  font-family: var(--Goldman);
   color: transparent;
   background-size: 100%;
   background-clip: text;
@@ -87,7 +93,8 @@ export default {
 
 #diy {
   font-size: 3.5rem;
-  color: transparent;
+  color: white;
+  text-shadow: 3px 5px 2px #09587c;
   background-size: 100%;
   background-clip: text;
   background-position: 100% 20%;

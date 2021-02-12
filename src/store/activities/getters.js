@@ -2,8 +2,11 @@ export default {
   loadCatogerys(state) {
     return state.category;
   },
-  loadActivities(state, getters) {
-    const allActivities = state.activities;
+  loadAllActivities(state) {
+    return state.activities;
+  },
+  loadActivities(_, getters) {
+    const allActivities = getters.loadAllActivities;
     const selectedCategory = getters.loadCatogerys;
     const filteredActivities = allActivities.filter(
       (allActivities) => allActivities.category === selectedCategory

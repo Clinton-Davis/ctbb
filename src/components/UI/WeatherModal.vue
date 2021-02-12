@@ -89,24 +89,23 @@ div {
   padding: 0.25rem;
 }
 
-.modal-enter-from,
-.modal-leave-to {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
 .modal-enter-active {
-  transition: all 0.3s ease-out;
+  animation: weathermodal 0.6s ease-out;
 }
 
 .modal-leave-active {
-  transition: all 0.3s ease-in;
+  animation: weathermodal 0.6s ease-in reverse;
 }
 
-.modal-enter-to,
-.modal-leave-from {
-  opacity: 1;
-  transform: scale(1);
+@keyframes weathermodal {
+  from {
+    opacity: 0;
+    transform: scale(0.01);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @media (min-width: 768px) {

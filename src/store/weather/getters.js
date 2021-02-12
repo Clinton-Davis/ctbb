@@ -9,13 +9,30 @@ export default {
       cloudDiscrition: state.cloudDiscrition,
       pressure: state.pressure,
       direction: state.direction,
+      sunrise: state.sunrise,
+      sunset: state.sunset,
     };
     return weather;
+  },
+  getSunRise(state) {
+    let rdate = new Date(state.sunrise * 1000);
+    let rh = rdate.getHours();
+    let rhours = rh + 2;
+    let rminutes = "0" + rdate.getMinutes();
+    let sunRise = rhours + ":" + rminutes.substr(-2);
+    return sunRise;
+  },
+  getSunSet(state) {
+    let rdate = new Date(state.sunset * 1000);
+    let rh = rdate.getHours();
+    let rhours = rh + 2;
+    let rminutes = "0" + rdate.getMinutes();
+    let sunSet = rhours + ":" + rminutes.substr(-2);
+    return sunSet;
   },
 
   getWindDirection(state) {
     const direction = state.direction;
-
     if (direction > 349 || direction <= 12) {
       return "N";
     } else if (direction > 12 && direction <= 34) {

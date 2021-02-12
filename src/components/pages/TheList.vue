@@ -3,11 +3,10 @@
     <ListCard
       v-for="tour in loadActivities"
       :key="tour.id"
+      :id="tour.id"
       :name="tour.name"
       :info="tour.info"
-      :category="tour.category"
       :src="tour.imageUrl"
-      @click="getTourDetails"
     />
   </div>
 </template>
@@ -18,9 +17,7 @@ import ListCard from "../UI/ListCard.vue";
 export default {
   components: { ListCard },
   data() {
-    return {
-      results: [],
-    };
+    return {};
   },
   created() {
     this.loadTours();
@@ -28,17 +25,11 @@ export default {
 
   computed: {
     ...mapGetters("activites", ["loadActivities"]),
-
-    // selectedList() {
-    // const items = this.$store.getters["activites/loadActivities"];
-    // return items;
-    // },
   },
   methods: {
     loadTours() {
       this.$store.dispatch("activites/loadActivities");
     },
-    getTourDetails() {},
   },
 };
 </script>

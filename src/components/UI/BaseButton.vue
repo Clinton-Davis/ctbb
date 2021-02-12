@@ -68,4 +68,14 @@ button:active {
   -webkit-box-shadow: 0px 10px 13px -7px #000000,
     5px 5px 15px 5px rgba(0, 0, 0, 0);
 }
+.hide {
+  padding: 0.25rem 0.5rem;
+  background-color: transparent;
+  color: rgb(5, 0, 0);
+}
+.hide:hover {
+  background-color: white;
+  border: 1px white solid;
+  color: #000000;
+}
 </style>

@@ -34,7 +34,6 @@
           >
         </li>
       </ul>
-
       <ul class="headerUL">
         <li class="pointer" id="about">About Us</li>
         <li class="pointer links">
@@ -51,12 +50,20 @@
           Feels Like: <br />
           {{ getWeatherData.feels_like }}˚C
         </li>
-        <li>Max: <br />{{ getWeatherData.tempsMax }}˚C</li>
+        <!-- <li>Max: <br />{{ getWeatherData.tempsMax }}˚C</li> -->
         <li>Min: <br />{{ getWeatherData.tempMin }}˚C</li>
       </ul>
     </template>
     <template v-slot:wind>
       <ul class="modalUl">
+        <li>
+          SunRise <br />
+          {{ getSunRise }}
+        </li>
+        <li>
+          SunSet <br />
+          {{ getSunSet }}
+        </li>
         <li>Wind Streanth: <br />{{ getWeatherData.wind }} Kph</li>
         <li>Wind Direction: <br />{{ getWindDirection }}</li>
       </ul>
@@ -65,7 +72,8 @@
       <ul class="modalUl">
         <li>Humidity: <br />{{ getWeatherData.humidity }}%</li>
         <li>
-          Air Pressure: <br />{{ getWeatherData.pressure }} <small>Atm's</small>
+          Atmospheric pressure: <br />{{ getWeatherData.pressure }}
+          <small> hPa</small>
         </li>
         <li>Cloud: <br />{{ getWeatherData.cloudDiscrition }}</li>
       </ul>
@@ -83,6 +91,7 @@ export default {
       haveWeather: false,
       feels_like: null,
       openModal: false,
+      sunRise: null,
     };
   },
   created() {
@@ -98,9 +107,24 @@ export default {
     loadWeather() {
       this.$store.dispatch("weather/loadWeather");
     },
+    // sunUps(getSunRise) {
+    // console.log(getSunRise);
+    // let rdate = new Date(getSunRise * 1000);
+    // let rh = rdate.getHours();
+    // let rhours = rh + 2;
+    // let rminutes = "0" + rdate.getMinutes();
+    // let sunRise = rhours + ":" + rminutes.substr(-2);
+    // console.log(sunRise);
+    // return sunRise;
+    // },
   },
   computed: {
-    ...mapGetters("weather", ["getWeatherData", "getWindDirection"]),
+    ...mapGetters("weather", [
+      "getWeatherData",
+      "getWindDirection",
+      "getSunRise",
+      "getSunSet",
+    ]),
   },
   watch: {
     getWeatherData() {
@@ -148,7 +172,7 @@ li {
   font-family: var(--Goldman);
   list-style: none;
   margin: auto 0.5rem;
-  /* text-align: ; */
+  text-transform: capitalize;
 }
 a {
   text-decoration: none;

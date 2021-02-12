@@ -1,28 +1,34 @@
 <template>
-  <div class="list__backdrop">
-    <div class="card__wrapper" title="Click for details">
-      <div class="card__content">
-        <img :src="src" :alt="name" />
-        <div class="name">
-          <h3>{{ name }}</h3>
-        </div>
-        <!-- <div class="info">
+  <router-link :to="detailsLink">
+    <div class="list__backdrop">
+      <div class="card__wrapper" title="Click for details">
+        <div class="card__content">
+          <img :src="src" :alt="name" />
+          <div class="name">
+            <h3>{{ name }}</h3>
+          </div>
+          <!-- <div class="info">
         <h3>Description</h3>
         {{ info }}
       </div> -->
+        </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
 export default {
-  props: ["name", "category", "info", "src"],
+  props: ["name", "category", "info", "src", "id"],
   data() {
     return {};
   },
   methods: {},
-  computed: {},
+  computed: {
+    detailsLink() {
+      return "/details/" + this.id;
+    },
+  },
 };
 </script>
 

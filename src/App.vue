@@ -1,24 +1,13 @@
 <template>
   <main>
     <nav-bar></nav-bar>
-    <router-view @category="getCategory"></router-view>
+    <router-view></router-view>
   </main>
 </template>
 
 <script>
 export default {
   name: "App",
-  components: {},
-  data() {
-    return {
-      category: "",
-    };
-  },
-  methods: {
-    getCategory(category) {
-      this.category = category;
-    },
-  },
 };
 </script>
 
@@ -28,7 +17,6 @@ export default {
 
 :root {
   --Goldman: "Goldman", sans-serif;
-
   --Montserrat: "Montserrat", sans-serif;
   --white: rgb(243, 242, 242);
 }

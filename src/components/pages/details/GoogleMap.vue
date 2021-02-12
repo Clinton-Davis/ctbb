@@ -1,10 +1,21 @@
 <template>
-  <div class="map">{{ googleId }}</div>
+  <div class="map">{{ googleId }} {{ currentPosition }}</div>
 </template>
 
 <script>
+import { computed } from "vue";
+import { useGeolocation } from "../../../useGeolocation";
 export default {
   props: ["googleId"],
+  setup() {
+    const { coords } = useGeolocation();
+    const currentPosition = computed(() => ({
+      lat: coords.value.latitude,
+      lng: coords.value.longitude,
+    }));
+
+    return { currentPosition };
+  },
 };
 </script>
 

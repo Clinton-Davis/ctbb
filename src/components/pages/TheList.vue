@@ -28,11 +28,6 @@ export default {
 
   computed: {
     ...mapGetters("activites", ["loadActivities"]),
-
-    // selectedList() {
-    // const items = this.$store.getters["activites/loadActivities"];
-    // return items;
-    // },
   },
   methods: {
     loadTours() {

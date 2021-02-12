@@ -3,11 +3,11 @@
     <ListCard
       v-for="tour in loadActivities"
       :key="tour.id"
+      :id="tour.id"
       :name="tour.name"
       :info="tour.info"
       :category="tour.category"
       :src="tour.imageUrl"
-      @click="getTourDetails"
     />
   </div>
 </template>
@@ -33,7 +33,6 @@ export default {
     loadTours() {
       this.$store.dispatch("activites/loadActivities");
     },
-    getTourDetails() {},
   },
 };
 </script>

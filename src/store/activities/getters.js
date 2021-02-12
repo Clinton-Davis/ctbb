@@ -10,4 +10,9 @@ export default {
     );
     return filteredActivities;
   },
+  loadAllActivities(state) {
+    const allactivities = state.activities;
+    console.log(allactivities);
+    return allactivities;
+  },
 };

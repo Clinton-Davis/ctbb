@@ -1,14 +1,11 @@
 <template>
   <div class="tour_details__container">
     <div class="tour_details__heading">
-      <h1>Tour Name</h1>
+      <h1>Tour Name{{ name }}</h1>
     </div>
     <div class="tour_details__map-desc-wrapper">
       <div class="desc">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem odio a
-        molestias illum perspiciatis explicabo nobis aut atque! Pariatur,
-        officia. Deserunt dolor rem maxime quis temporibus nisi asperiores
-        necessitatibus fuga!
+        {{ info }}
       </div>
       <div class="map"></div>
     </div>
@@ -19,7 +16,17 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["id"],
+  data() {
+    return {
+      getDirections: false,
+      selectedTour: null,
+      name: "",
+      info: "",
+    };
+  },
+};
 </script>
 
 <style scoped>

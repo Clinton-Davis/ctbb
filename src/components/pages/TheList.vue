@@ -6,7 +6,6 @@
       :id="tour.id"
       :name="tour.name"
       :info="tour.info"
-      :category="tour.category"
       :src="tour.imageUrl"
     />
   </div>
@@ -18,9 +17,7 @@ import ListCard from "../UI/ListCard.vue";
 export default {
   components: { ListCard },
   data() {
-    return {
-      results: [],
-    };
+    return {};
   },
   created() {
     this.loadTours();

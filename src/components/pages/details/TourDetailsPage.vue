@@ -1,12 +1,18 @@
 <template>
   <div class="tour_details__container">
     <div class="tour_details__heading">
-      <h1>Tour Name{{ name }}</h1>
+      <h1>{{ name }}</h1>
     </div>
     <div class="tour_details__map-desc-wrapper">
-      <div class="desc">
-        {{ info }}
+      <div class="data" :style="{ backgroundImage: 'url(' + src + ')' }">
+        <div v-if="!hideDes" class="desc">
+          <p>{{ info }}</p>
+        </div>
+        <base-button id="hideShowBtn" @click="hideDesc" mode="hide"
+          >Hide Direction</base-button
+        >
       </div>
+
       <div class="map"></div>
     </div>
     <div class="tour_details__Btn">
@@ -16,15 +22,37 @@
 </template>
 
 <script>
+import BaseButton from "../../UI/BaseButton.vue";
 export default {
+  components: { BaseButton },
   props: ["id"],
   data() {
     return {
       getDirections: false,
       selectedTour: null,
-      name: "",
-      info: "",
+      hideDes: false,
     };
+  },
+  methods: {
+    hideDesc() {
+      this.hideDes = !this.hideDes;
+    },
+  },
+  computed: {
+    name() {
+      return this.selectedTour.name;
+    },
+    info() {
+      return this.selectedTour.info;
+    },
+    src() {
+      return this.selectedTour.imageUrl;
+    },
+  },
+  created() {
+    this.selectedTour = this.$store.getters["activites/loadAllActivities"].find(
+      (activities) => activities.id === this.id
+    );
   },
 };
 </script>
@@ -54,20 +82,44 @@ export default {
   width: 50%;
   background: blue;
   height: 20rem;
-  margin: 1rem;
+  margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 20px;
 }
-.desc {
+.data {
+  position: relative;
+  display: flex;
+  margin: 0.5rem;
+  width: 50%;
   padding: 0.5rem;
-  width: 50%;
-  margin: 1rem;
-  background: rgb(252, 252, 252);
-  height: 20rem;
-  width: 50%;
   border-radius: 20px;
+  height: 20rem;
+  background-position: center;
+  background-size: cover;
+  align-items: flex-end;
+}
+.desc {
+  display: flex;
+  flex-direction: column;
+  background: rgb(252, 252, 252);
+  border-radius: 20px;
+  display: flex;
+  height: fit-content;
+}
+.desc p {
+  display: flex;
+  padding: 1rem;
+}
+img {
+  padding: 1rem;
+  height: 12rem;
 }
 .tour_details__Btn {
   margin: 2rem auto;
+}
+#hideShowBtn {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 </style>

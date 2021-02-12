@@ -13,7 +13,7 @@
         >
       </div>
 
-      <div class="map"></div>
+      <google-map :googleId="googleId"></google-map>
     </div>
     <div class="tour_details__Btn">
       <base-button mode="full">Get Directions</base-button>
@@ -23,8 +23,10 @@
 
 <script>
 import BaseButton from "../../UI/BaseButton.vue";
+import GoogleMap from "../details/GoogleMap.vue";
+
 export default {
-  components: { BaseButton },
+  components: { BaseButton, GoogleMap },
   props: ["id"],
   data() {
     return {
@@ -47,6 +49,11 @@ export default {
     },
     src() {
       return this.selectedTour.imageUrl;
+    },
+    googleId() {
+      const google_Id = this.selectedTour.googleId;
+      console.log(google_Id);
+      return google_Id;
     },
   },
   created() {

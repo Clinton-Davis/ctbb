@@ -56,6 +56,14 @@
     </template>
     <template v-slot:wind>
       <ul class="modalUl">
+        <li>
+          SunRise <br />
+          {{ getWeatherData.sunrise }}
+        </li>
+        <li>
+          SunSet <br />
+          {{ getWeatherData.sunset }}
+        </li>
         <li>Wind Streanth: <br />{{ getWeatherData.wind }} Kph</li>
         <li>Wind Direction: <br />{{ getWindDirection }}</li>
       </ul>
@@ -98,9 +106,27 @@ export default {
     loadWeather() {
       this.$store.dispatch("weather/loadWeather");
     },
+    // getsunTimes() {
+    //   let unix_timestampSunrise = getWeatherData.sunrise;
+    //   var rdate = new Date(unix_timestampSunrise * 1000);
+    //   var rh = rdate.getHours();
+    //   var rhours = rh + 2;
+    //   var rminutes = "0" + rdate.getMinutes();
+    //   var sunRise = rhours + ":" + rminutes.substr(-2);
+
+    //   let unix_timestampSunset = obj.sys.sunset;
+    //   var sdate = new Date(unix_timestampSunset * 1000);
+    //   var sh = sdate.getHours();
+    //   var shours = sh + 2;
+    //   var sminutes = "0" + sdate.getMinutes();
+    //   var sunSet = shours + ":" + sminutes.substr(-2);
+    // },
   },
   computed: {
     ...mapGetters("weather", ["getWeatherData", "getWindDirection"]),
+    // SunRise() {
+    //   return this.$store.getter['weather/getWeatherData']
+    // },
   },
   watch: {
     getWeatherData() {

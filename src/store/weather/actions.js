@@ -19,6 +19,8 @@ export default {
       pressure: Math.floor(responseData.main.pressure),
       wind: responseData.wind.speed,
       direction: responseData.wind.deg,
+      sunrise: responseData.sys.sunrise,
+      sunset: responseData.sys.sunset,
     };
     context.commit("loadWeather", weatherData);
   },

@@ -9,5 +9,7 @@ export default {
     state.humidity = payload.humidity;
     state.cloudDiscrition = payload.cloudDiscrition;
     state.pressure = payload.pressure;
+    state.sunset = payload.sunset;
+    state.sunrise = payload.sunrise;
   },
 };

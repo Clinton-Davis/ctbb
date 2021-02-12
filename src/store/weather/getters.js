@@ -9,13 +9,14 @@ export default {
       cloudDiscrition: state.cloudDiscrition,
       pressure: state.pressure,
       direction: state.direction,
+      sunrise: state.sunrise,
+      sunset: state.sunset,
     };
     return weather;
   },
 
   getWindDirection(state) {
     const direction = state.direction;
-
     if (direction > 349 || direction <= 12) {
       return "N";
     } else if (direction > 12 && direction <= 34) {

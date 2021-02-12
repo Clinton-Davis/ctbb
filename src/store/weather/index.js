@@ -15,6 +15,8 @@ export default {
       humidity: null,
       cloudDiscrition: "",
       pressure: null,
+      sunrise: null,
+      sunset: null,
     };
   },
   mutations,

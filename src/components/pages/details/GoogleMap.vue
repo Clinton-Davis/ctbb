@@ -1,10 +1,12 @@
 <template>
-  <div class="map">{{ googleId }} {{ currentPosition }}</div>
+  <div class="map" ref="mapDiv">{{ googleId }} {{ currentPosition }}</div>
 </template>
 
 <script>
-import { computed } from "vue";
+/* eslint-disable no-undef*/
+import { computed, onMounted, ref } from "vue";
 import { useGeolocation } from "../../../useGeolocation";
+import { Loader } from "@googlemaps/js-api-loader";
 export default {
   props: ["googleId"],
   setup() {
@@ -14,7 +16,21 @@ export default {
       lng: coords.value.longitude,
     }));
 
-    return { currentPosition };
+    const GOOGLE_API_KEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
+
+    const loader = new Loader({
+      apikey: `${GOOGLE_API_KEY}`,
+    });
+    const mapDiv = ref(null);
+    onMounted(async () => {
+      await loader.load();
+      new google.maps.Map(mapDiv.value, {
+        center: currentPosition.value,
+        zoom: 7,
+      });
+    });
+
+    return { currentPosition, mapDiv };
   },
 };
 </script>

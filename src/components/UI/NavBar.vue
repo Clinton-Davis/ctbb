@@ -34,7 +34,6 @@
           >
         </li>
       </ul>
-
       <ul class="headerUL">
         <li class="pointer" id="about">About Us</li>
         <li class="pointer links">
@@ -51,7 +50,7 @@
           Feels Like: <br />
           {{ getWeatherData.feels_like }}˚C
         </li>
-        <li>Max: <br />{{ getWeatherData.tempsMax }}˚C</li>
+        <!-- <li>Max: <br />{{ getWeatherData.tempsMax }}˚C</li> -->
         <li>Min: <br />{{ getWeatherData.tempMin }}˚C</li>
       </ul>
     </template>
@@ -65,7 +64,8 @@
       <ul class="modalUl">
         <li>Humidity: <br />{{ getWeatherData.humidity }}%</li>
         <li>
-          Air Pressure: <br />{{ getWeatherData.pressure }} <small>Atm's</small>
+          Atmospheric pressure: <br />{{ getWeatherData.pressure }}
+          <small> hPa</small>
         </li>
         <li>Cloud: <br />{{ getWeatherData.cloudDiscrition }}</li>
       </ul>
@@ -148,7 +148,7 @@ li {
   font-family: var(--Goldman);
   list-style: none;
   margin: auto 0.5rem;
-  /* text-align: ; */
+  text-transform: capitalize;
 }
 a {
   text-decoration: none;

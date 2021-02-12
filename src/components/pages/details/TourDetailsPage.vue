@@ -5,17 +5,17 @@
     </div>
     <div class="tour_details__map-desc-wrapper">
       <div class="data" :style="{ backgroundImage: 'url(' + src + ')' }">
-        <div v-if="!hideDes" class="desc">
-          <p>{{ info }}</p>
-        </div>
-        <base-button id="hideShowBtn" @click="hideDesc" mode="hide"
-          >Hide Direction</base-button
-        >
+        <transition name="fadeIn">
+          <div v-if="!hideDes" class="desc">
+            <p>{{ info }}</p>
+          </div>
+        </transition>
       </div>
 
       <google-map :googleId="googleId"></google-map>
     </div>
     <div class="tour_details__Btn">
+      <base-button @click="hideDesc" mode="full">{{ BtnMessage }}</base-button>
       <base-button mode="full">Get Directions</base-button>
     </div>
   </div>
@@ -33,6 +33,7 @@ export default {
       getDirections: false,
       selectedTour: null,
       hideDes: false,
+      BtnMessage: "Hide Description",
     };
   },
   methods: {
@@ -54,6 +55,15 @@ export default {
       const google_Id = this.selectedTour.googleId;
       console.log(google_Id);
       return google_Id;
+    },
+  },
+  watch: {
+    hideDes() {
+      if (this.hideDes) {
+        this.BtnMessage = "Show Description";
+      } else {
+        this.BtnMessage = "Hide Description";
+      }
     },
   },
   created() {
@@ -88,7 +98,7 @@ export default {
 .map {
   width: 50%;
   background: blue;
-  height: 20rem;
+  height: 23rem;
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 20px;
@@ -100,7 +110,7 @@ export default {
   width: 50%;
   padding: 0.5rem;
   border-radius: 20px;
-  height: 20rem;
+  height: 23rem;
   background-position: center;
   background-size: cover;
   align-items: flex-end;
@@ -122,11 +132,27 @@ img {
   height: 12rem;
 }
 .tour_details__Btn {
-  margin: 2rem auto;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.125rem 0rem 0.5rem 0rem;
 }
-#hideShowBtn {
-  position: absolute;
-  top: 0;
-  left: 0;
+
+.fadeIn-enter-active {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.fadeIn-leave-active {
+  animation: fadeIn 0.6s ease-in reverse;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.01);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 </style>

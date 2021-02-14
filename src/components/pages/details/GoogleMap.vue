@@ -4,9 +4,11 @@
 
 <script>
 /* eslint-disable no-undef*/
-import { computed, onMounted, ref } from "vue";
+// import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useGeolocation } from "../../../useGeolocation";
-import { Loader } from "@googlemaps/js-api-loader";
+
+// const GOOGLE_API_KEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
+// const GOOGLE_API_KEY = "AIzaSyCDSIISVXRgnUOFCmuRimDEcbkxivaTJk4";
 export default {
   props: ["googleId"],
   setup() {
@@ -15,22 +17,7 @@ export default {
       lat: coords.value.latitude,
       lng: coords.value.longitude,
     }));
-
-    const GOOGLE_API_KEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
-
-    const loader = new Loader({
-      apikey: `${GOOGLE_API_KEY}`,
-    });
-    const mapDiv = ref(null);
-    onMounted(async () => {
-      await loader.load();
-      new google.maps.Map(mapDiv.value, {
-        center: currentPosition.value,
-        zoom: 7,
-      });
-    });
-
-    return { currentPosition, mapDiv };
+    const otherPos = ref(null);
   },
 };
 </script>

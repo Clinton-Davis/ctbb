@@ -12,7 +12,11 @@
         </transition>
       </div>
 
-      <google-map :googleId="googleId"></google-map>
+      <google-map
+        :googleId="googleId"
+        :Lat="latitude"
+        :Lng="longitude"
+      ></google-map>
     </div>
     <div class="tour_details__Btn">
       <base-button @click="hideDesc" mode="full">{{ BtnMessage }}</base-button>
@@ -52,9 +56,13 @@ export default {
       return this.selectedTour.imageUrl;
     },
     googleId() {
-      const google_Id = this.selectedTour.googleId;
-      console.log(google_Id);
-      return google_Id;
+      return this.selectedTour.googleId;
+    },
+    latitude() {
+      return this.selectedTour.lat;
+    },
+    longitude() {
+      return this.selectedTour.lng;
     },
   },
   watch: {
@@ -110,7 +118,7 @@ export default {
   width: 50%;
   padding: 0.5rem;
   border-radius: 20px;
-  height: 23rem;
+  height: 25rem;
   background-position: center;
   background-size: cover;
   align-items: flex-end;

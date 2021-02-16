@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  props: ["name", "category", "info", "src", "id"],
+  props: ["name", "category", "info", "src", "id", "lat", " lng"],
   data() {
     return {};
   },

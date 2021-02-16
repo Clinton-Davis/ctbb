@@ -4,6 +4,7 @@
       <h1>{{ tourName }}</h1>
     </div>
     <div class="tour_details__map-desc-wrapper">
+      <!-- Image and Info Div  -->
       <div
         v-if="!getDirections"
         class="data"
@@ -15,12 +16,16 @@
           </div>
         </transition>
       </div>
+      <!-- GoogleMaps-Dirstions -->
+      <div v-if="getDirections" id="mapDir" ref="mapDir" class="data">
+        DIRECTIONS
+      </div>
       <!-- GoogleMaps-Map  -->
       <div id="map" ref="mapDiv">
         <div v-if="isLoading" class="mapBD">
           <div class="spinnerDiv">
             <img
-              src="../../../assets/image/t-google-maps-icon-transp30x.png"
+              src="../../assets/image/icons8-google-maps.svg"
               onclick="addSpinner()"
               id="googleIcon"
               alt="mapIcon"
@@ -30,6 +35,7 @@
               <span class="dit-1">.</span>
               <span class="dit-2">.</span>
               <span class="dit-3">.</span>
+              <span class="dit-4">.</span>
             </h3>
           </div>
         </div>
@@ -37,7 +43,9 @@
     </div>
     <div class="tour_details__Btn">
       <base-button @click="hideDesc" mode="full">{{ BtnMessage }}</base-button>
-      <base-button mode="full">Get Directions</base-button>
+      <base-button @click="getUserLocation" mode="full"
+        >Get Directions</base-button
+      >
     </div>
   </div>
 </template>
@@ -45,24 +53,19 @@
 <script>
 import axios from "axios";
 import { Loader } from "@googlemaps/js-api-loader";
-import BaseButton from "../../UI/BaseButton.vue";
+import BaseButton from "../../components/UI/BaseButton.vue";
 
 export default {
   components: { BaseButton },
   props: ["id"],
   data() {
     return {
+      Google_api_key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY,
       getDirections: false,
       selectedTour: null,
       hideDes: false,
       BtnMessage: "Hide Description",
-      marker: "",
-      name: "",
-      website: "",
-      Google_api_key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY,
       error: "",
-      lat: 0,
-      lng: 0,
       isLoading: false,
       Data: {},
       noPhone: false,
@@ -79,7 +82,6 @@ export default {
       axios
         .get(URL)
         .then((response) => {
-          console.log(response);
           if (response.data.error_message) {
             this.error = response.data.error_message;
           } else {
@@ -87,7 +89,7 @@ export default {
             return place;
           }
         })
-        //* Getting the lat and lng from responce
+        //* Getting the Data from responce
         .then((place) => {
           const data = {
             lat: place.geometry.location.lat,
@@ -108,8 +110,8 @@ export default {
           this.error = error.message;
         });
     },
+    //**Initialise Map*/
     getMaps(lat, lng) {
-      console.log(this.Data);
       const loader = new Loader({
         apiKey: this.Google_api_key,
         version: "weekly",
@@ -154,9 +156,70 @@ export default {
         }
       });
     },
-    hideDesc() {
-      this.hideDes = !this.hideDes;
+    //** Getting User Loaction */
+    getUserLocation() {
+      var destination = this.googleId;
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const start =
+              position.coords.latitude + "," + position.coords.longitude;
+
+            this.directions(start, destination);
+          },
+          (error) => {
+            console.log(error);
+            this.error = " Unable to find you.";
+          }
+        );
+      } else {
+        // this.error = error.message;
+        console.log("Your browser does not support geolacation" + this.error);
+      }
     },
+    directions(start, destination) {
+      // let destination = destination;
+      var directionsService = new window.google.maps.DirectionsService();
+      var directionsDisplay = new window.google.maps.DirectionsRenderer();
+      directionsDisplay.setMap(this.$refs["mapDiv"]);
+
+      //google maps API's direction service
+      function calculateAndDisplayRoute(
+        directionsService,
+        directionsDisplay,
+        start,
+        destination
+      ) {
+        directionsService.route(
+          {
+            origin: start,
+            destination: destination,
+            travelMode: "DRIVING",
+          },
+          function(response, status) {
+            if (status === "OK") {
+              directionsDisplay.setDirections(response);
+            } else {
+              window.alert("Directions request failed due to " + status);
+            }
+          }
+        );
+      }
+
+      console.log(this.coords);
+      console.log(this.destination);
+      console.log("hmmm yha");
+      calculateAndDisplayRoute(
+        directionsService,
+        directionsDisplay,
+        this.coords,
+        this.destination
+      );
+    },
+  },
+
+  hideDesc() {
+    this.hideDes = !this.hideDes;
   },
 
   computed: {
@@ -171,12 +234,6 @@ export default {
     },
     googleId() {
       return this.selectedTour.googleId;
-    },
-    latitude() {
-      return this.selectedTour.lat;
-    },
-    longitude() {
-      return this.selectedTour.lng;
     },
   },
   watch: {
@@ -233,53 +290,68 @@ export default {
   justify-content: center;
 }
 #googleIcon {
-  animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite alternate;
   position: absolute;
-  top: 40vh;
+  top: 20vh;
   z-index: 6;
-  border-top: 5px solid blue;
+  /* border-top: 5px solid blue;
   border-right: 5px solid green;
   border-bottom: 5px solid red;
-  border-left: 5px solid yellow;
+  border-left: 5px solid yellow; */
   padding: 0 8px 0 8px;
   border-radius: 50%;
+  height: 8rem;
 }
 @keyframes spin {
   0% {
-    transform: rotate(0deg);
+    transform: rotateY(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: rotateY(360deg);
   }
 }
 .dit-1 {
-  color: rgb(255, 0, 0);
-  font-size: 1.5em;
+  color: #f3301c;
+  font-size: 3rem;
   z-index: 0;
+  margin: 2px;
   animation-name: dot;
   animation-delay: 0.1s;
   animation-direction: alternate;
-  animation-duration: 0.5s;
+  animation-duration: 0.7s;
   animation-iteration-count: infinite;
 }
 .dit-2 {
-  color: rgb(6, 255, 6);
-  font-size: 1.5em;
+  color: #2ad958;
+  font-size: 3rem;
   z-index: 0;
+  margin: 2px;
   animation-name: dot;
   animation-delay: 0.2s;
   animation-direction: alternate;
-  animation-duration: 0.5s;
+  animation-duration: 0.7s;
   animation-iteration-count: infinite;
 }
 .dit-3 {
-  color: rgb(255, 255, 0);
-  font-size: 1.5em;
+  color: #eafc0e;
+  font-size: 3rem;
   z-index: 0;
+  margin: 2px;
   animation-name: dot;
   animation-delay: 0.3s;
   animation-direction: alternate;
-  animation-duration: 0.5s;
+  animation-duration: 0.7s;
+  animation-iteration-count: infinite;
+}
+.dit-4 {
+  color: #2c85eb;
+  font-size: 3rem;
+  z-index: 0;
+  margin: 2px;
+  animation-name: dot;
+  animation-delay: 0.4s;
+  animation-direction: alternate;
+  animation-duration: 0.7s;
   animation-iteration-count: infinite;
 }
 /*Dot animation*/

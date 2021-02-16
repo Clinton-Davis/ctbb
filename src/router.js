@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import InputForm from "./components/pages/InputForm.vue";
 import TheHero from "./components/pages/TheHero.vue";
 import TheList from "./components/pages/TheList.vue";
-import TourDetailsPage from "./components/pages/details/TourDetailsPage.vue";
+import TourDetailsPage from "./components/pages/TourDetailsPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),

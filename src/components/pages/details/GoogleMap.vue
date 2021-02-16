@@ -34,6 +34,8 @@ export default {
       lat: 0,
       lng: 0,
       isLoading: false,
+      Data: {},
+      noPhone: false,
     };
   },
   mounted() {
@@ -47,26 +49,37 @@ export default {
       axios
         .get(URL)
         .then((response) => {
+          console.log(response);
           if (response.data.error_message) {
             this.error = response.data.error_message;
           } else {
-            return response.data.result;
+            const place = response.data.result;
+            return place;
           }
         })
         //* Getting the lat and lng from responce
-        .then((response) => {
-          let lat = response.geometry.location.lat;
-          let lng = response.geometry.location.lng;
+        .then((place) => {
+          const data = {
+            lat: place.geometry.location.lat,
+            lng: place.geometry.location.lng,
+            Address: place.formatted_address,
+            Phone: place.international_phone_number,
+            name: place.name,
+            rating: place.rating,
+            website: place.website,
+            total_rating: place.user_ratings_total,
+          };
+          this.Data = data;
+
           //*Calling Map loader with lat lng.
-          this.getMaps(lat, lng);
-          this.lat = lat;
-          this.lng = lng;
+          this.getMaps(data.lat, data.lng);
         })
         .catch((error) => {
           this.error = error.message;
         });
     },
     getMaps(lat, lng) {
+      console.log(this.Data);
       const loader = new Loader({
         apiKey: this.Google_api_key,
         version: "weekly",
@@ -79,12 +92,31 @@ export default {
           mapTypeId: "hybrid",
           mapTypeControl: false,
         });
-        console.log(map);
-        new window.google.maps.Marker({
+        const infoWindow = new window.google.maps.InfoWindow();
+        let marker = new window.google.maps.Marker({
           position: new window.google.maps.LatLng(lat, lng),
           map: map,
         });
-        this.isLoading = false;
+        console.log(this.Data.name);
+        if (this.Data.name === "Kalk Bay" || this.Data.name === "Constantia") {
+          infoWindow.setContent(
+            `<div class="info_Header"><h2>${this.Data.name}</2h></div>
+            <div class="info_Data"><h5>Address: ${this.Data.Address}</h5><div>
+            `
+          );
+          infoWindow.open(map, marker);
+          this.isLoading = false;
+        } else {
+          infoWindow.setContent(
+            `<div class="info_Header"><h2>${this.Data.name}</2h></div>
+            <div class="info_Data"><h5>Address: ${this.Data.Address}</h5><div>
+            <div v-if="noPhone" class="info_Data"><h5>Phone: ${this.Data.Phone}</h5><div>
+            <div class="info_Data"><h5>Ratings: ${this.Data.rating} /5 <small>Total Ratings ${this.Data.total_rating}</h5><div>
+            <a class="info_Data"> <h5>WebSite: ${this.Data.website}</a>`
+          );
+          infoWindow.open(map, marker);
+          this.isLoading = false;
+        }
       });
     },
   },
@@ -92,6 +124,11 @@ export default {
 </script>
 
 <style scoped>
+.gm-style .gm-style-iw-c {
+  border-radius: 10px;
+  color: black;
+  box-shadow: 0 2px 7px 1px rgb(0 0 0 / 30%);
+}
 #map {
   background: rgb(255, 255, 255);
   width: 50%;
@@ -99,7 +136,9 @@ export default {
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 20px;
+  color: black;
 }
+
 .spinnerDiv {
   display: flex;
   justify-content: center;

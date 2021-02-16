@@ -42,4 +42,7 @@ main {
   min-height: 100vh;
   z-index: 0;
 }
+p {
+  color: black;
+}
 </style>

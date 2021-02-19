@@ -17,12 +17,27 @@
         </transition>
       </div>
       <!-- GoogleMaps-Dirstions -->
-      <div v-if="getDirections" id="mapDir" ref="mapDir" class="data">
-        DIRECTIONS
+      <div v-else id="mapDir" ref="mapDir" class="directions">
+        <div v-if="isLoading" class="mapBD">
+          <div class="spinnerDiv">
+            <img
+              src="../../assets/image/icons8-google-maps.svg"
+              onclick="addSpinner()"
+              id="googleIcon"
+              alt="mapIcon"
+            />
+            <h3 id="loadingText">
+              Loading
+              <span class="dit-1">.</span>
+              <span class="dit-2">.</span>
+              <span class="dit-3">.</span>
+              <span class="dit-4">.</span>
+            </h3>
+          </div>
+        </div>
       </div>
       <!-- GoogleMaps-Map  -->
       <div id="map" ref="mapDiv">
-        {{ googleId }}
         <div v-if="isLoading" class="mapBD">
           <div class="spinnerDiv">
             <img
@@ -44,7 +59,7 @@
     </div>
     <div class="tour_details__Btn">
       <base-button @click="hideDesc" mode="full">{{ BtnMessage }}</base-button>
-      <base-button @click="getUserLocation" mode="full"
+      <base-button @click="getUserLocation()" mode="full"
         >Get Directions</base-button
       >
     </div>
@@ -67,14 +82,15 @@ export default {
       BtnMessage: "Hide Description",
       error: "",
       isLoading: false,
-      Data: {},
+      Data: null,
       noPhone: false,
       Marker: null,
+      userLocation: null,
     };
   },
   mounted() {
     this.GetPlaceDetails();
-    this.isLoading = false;
+    this.isLoading = true;
   },
   methods: {
     //* Calling the Map-details with GoogleId
@@ -153,6 +169,8 @@ export default {
     },
     //** Getting User Loaction */
     getUserLocation() {
+      this.isLoading = true;
+      this.getDirections = true;
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -160,7 +178,47 @@ export default {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
-            this.directions(userLocation);
+
+            const directionsService = new window.google.maps.DirectionsService();
+            const destination = this.selectedTour.googleId;
+            const center = new window.google.maps.LatLng(
+              userLocation.lat,
+              userLocation.lng
+            );
+            let mapOptions = {
+              zoom: 15,
+              center: center,
+              mapTypeId: "hybrid",
+              mapTypeControl: false,
+            };
+            let map = new window.google.maps.Map(
+              this.$refs["mapDiv"],
+              mapOptions
+            );
+            let marker = new window.google.maps.Marker({
+              // new window.google.maps.Marker({
+              position: new window.google.maps.LatLng(
+                userLocation.lat,
+                userLocation.lng
+              ),
+              map: map,
+            });
+
+            let request = {
+              origin: marker.position,
+              destination: { placeId: destination },
+              travelMode: "DRIVING",
+            };
+            const directionsRenderer = new window.google.maps.DirectionsRenderer();
+            directionsService.route(request, (response, status) => {
+              if (status === "OK") {
+                directionsRenderer.setDirections(response);
+                directionsRenderer.setMap(map);
+                directionsRenderer.setPanel(this.$refs["mapDir"]);
+                this.getDirections = true;
+                this.isLoading = false;
+              }
+            });
           },
           (error) => {
             console.log(error);
@@ -172,42 +230,7 @@ export default {
         console.log("Your browser does not support geolacation" + this.error);
       }
     },
-    directions(userLocation) {
-      const directionsService = new window.google.maps.DirectionsService();
-      const destination = this.selectedTour.googleId;
-      const center = new window.google.maps.LatLng(
-        userLocation.lat,
-        userLocation.lng
-      );
-      let mapOptions = {
-        zoom: 15,
-        center: center,
-        mapTypeId: "hybrid",
-        mapTypeControl: false,
-      };
-      let map = new window.google.maps.Map(this.$refs["mapDiv"], mapOptions);
-      let marker = new window.google.maps.Marker({
-        // new window.google.maps.Marker({
-        position: new window.google.maps.LatLng(
-          userLocation.lat,
-          userLocation.lng
-        ),
-        map: map,
-      });
 
-      let request = {
-        origin: marker.position,
-        destination: { placeId: destination },
-        travelMode: "DRIVING",
-      };
-      const directionsRenderer = new window.google.maps.DirectionsRenderer();
-      directionsService.route(request, (response, status) => {
-        if (status === "OK") {
-          directionsRenderer.setDirections(response);
-          directionsRenderer.setMap(map);
-        }
-      });
-    },
     hideDesc() {
       this.hideDes = !this.hideDes;
     },
@@ -366,6 +389,30 @@ export default {
   background-size: cover;
   align-items: flex-end;
 }
+.directions {
+  background-color: rgba(252, 249, 249, 0.8);
+  color: black;
+  position: relative;
+  display: flex;
+  margin: 0.5rem;
+  width: 50%;
+  padding: 0.5rem;
+  border-radius: 20px;
+  height: 25rem;
+  overflow: auto;
+}
+.adp-step,
+.adp-text {
+  width: 100%;
+  font-weight: 600;
+}
+.adp-summary {
+  padding: 0 3px 3px 3px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-family: var(--Goldman);
+}
+
 .desc {
   display: flex;
   flex-direction: column;

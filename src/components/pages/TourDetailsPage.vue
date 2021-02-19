@@ -69,6 +69,7 @@ export default {
       isLoading: false,
       Data: {},
       noPhone: false,
+      Marker: null,
     };
   },
   mounted() {
@@ -124,6 +125,7 @@ export default {
         position: new window.google.maps.LatLng(lat, lng),
         map: map,
       });
+      this.Marker = marker;
       //**Populate InfoWindow */
       if (
         this.Data.name === "Kalk Bay" ||
@@ -154,13 +156,11 @@ export default {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            console.log(position);
-            const start = {
+            const userLocation = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
-            this.directions(start);
-            console.log(start);
+            this.directions(userLocation);
           },
           (error) => {
             console.log(error);
@@ -172,11 +172,13 @@ export default {
         console.log("Your browser does not support geolacation" + this.error);
       }
     },
-    directions(start) {
+    directions(userLocation) {
       const directionsService = new window.google.maps.DirectionsService();
-      const directionsRenderer = new window.google.maps.DirectionsRenderer();
-      const destination = this.googleId;
-      const center = new window.google.maps.LatLng(start.lat, start.lng);
+      const destination = this.selectedTour.googleId;
+      const center = new window.google.maps.LatLng(
+        userLocation.lat,
+        userLocation.lng
+      );
       let mapOptions = {
         zoom: 15,
         center: center,
@@ -185,19 +187,24 @@ export default {
       };
       let map = new window.google.maps.Map(this.$refs["mapDiv"], mapOptions);
       let marker = new window.google.maps.Marker({
-        position: new window.google.maps.LatLng(start.lat, start.lng),
+        // new window.google.maps.Marker({
+        position: new window.google.maps.LatLng(
+          userLocation.lat,
+          userLocation.lng
+        ),
         map: map,
       });
-      console.log(marker.position);
-      directionsRenderer.setMap(map);
+
       let request = {
-        origin: center,
-        destination: destination,
+        origin: marker.position,
+        destination: { placeId: destination },
         travelMode: "DRIVING",
       };
-      directionsService.route(request, function(result, status) {
+      const directionsRenderer = new window.google.maps.DirectionsRenderer();
+      directionsService.route(request, (response, status) => {
         if (status === "OK") {
-          directionsRenderer.setDirecions(result);
+          directionsRenderer.setDirections(response);
+          directionsRenderer.setMap(map);
         }
       });
     },

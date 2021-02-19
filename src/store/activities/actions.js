@@ -5,7 +5,7 @@ export default {
   },
   async loadActivities(context) {
     const response = await fetch(
-      "https://best-bits-1579528051004-default-rtdb.firebaseio.com/activities.json"
+      "https://tours-305210-default-rtdb.firebaseio.com/activities.json"
     );
     const responseData = await response.json();
     if (!response.ok) {

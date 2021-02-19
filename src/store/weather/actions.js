@@ -1,6 +1,6 @@
 export default {
   async loadWeather(context) {
-    const weather_api_key = process.env.VUE_APP_WEATHER_API_KEY;
+    const weather_api_key = process.env.WEATHER_API_KEY;
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?id=1085599&APPID=${weather_api_key}&units=metric`
     );

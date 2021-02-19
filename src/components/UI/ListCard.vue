@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  props: ["name", "category", "info", "src", "id"],
+  props: ["name", "category", "info", "src", "id", "lat", " lng"],
   data() {
     return {};
   },
@@ -33,6 +33,9 @@ export default {
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
 .card__wrapper {
   width: 20rem;
   border-radius: 20px;

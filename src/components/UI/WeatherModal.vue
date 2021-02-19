@@ -1,7 +1,7 @@
 <template>
   <teleport to="body">
     <div v-if="open" @click="$emit('close')" class="backdrop">
-      <transition name="modal">
+      <transition name="fadeIn">
         <dialog open v-if="open">
           <header>
             <h3>
@@ -33,14 +33,6 @@
 export default {
   props: ["open"],
   emits: ["close"],
-  methods: {
-    tryClose() {
-      if (this.fixed) {
-        return;
-      }
-      this.$emit("close");
-    },
-  },
 };
 </script>
 
@@ -89,15 +81,15 @@ div {
   padding: 0.25rem;
 }
 
-.modal-enter-active {
-  animation: weathermodal 0.6s ease-out;
+.fadeIn-enter-active {
+  animation: fadeIn 1s ease-out;
 }
 
-.modal-leave-active {
-  animation: weathermodal 0.6s ease-in reverse;
+.fadeIn-leave-active {
+  animation: fadeIn 1s ease-in reverse;
 }
 
-@keyframes weathermodal {
+@keyframes fadeIn {
   from {
     opacity: 0;
     transform: scale(0.01);

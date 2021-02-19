@@ -18,43 +18,11 @@
       </div>
       <!-- GoogleMaps-Dirstions -->
       <div v-else id="mapDir" ref="mapDir" class="directions">
-        <div v-if="isLoading" class="mapBD">
-          <div class="spinnerDiv">
-            <img
-              src="../../assets/image/icons8-google-maps.svg"
-              onclick="addSpinner()"
-              id="googleIcon"
-              alt="mapIcon"
-            />
-            <h3 id="loadingText">
-              Loading
-              <span class="dit-1">.</span>
-              <span class="dit-2">.</span>
-              <span class="dit-3">.</span>
-              <span class="dit-4">.</span>
-            </h3>
-          </div>
-        </div>
+        <LoadingSpinner v-if="isLoading" />
       </div>
       <!-- GoogleMaps-Map  -->
       <div id="map" ref="mapDiv">
-        <div v-if="isLoading" class="mapBD">
-          <div class="spinnerDiv">
-            <img
-              src="../../assets/image/icons8-google-maps.svg"
-              onclick="addSpinner()"
-              id="googleIcon"
-              alt="mapIcon"
-            />
-            <h3 id="loadingText">
-              Loading
-              <span class="dit-1">.</span>
-              <span class="dit-2">.</span>
-              <span class="dit-3">.</span>
-              <span class="dit-4">.</span>
-            </h3>
-          </div>
-        </div>
+        <LoadingSpinner v-if="isLoading" />
       </div>
     </div>
     <div class="tour_details__Btn">
@@ -69,9 +37,10 @@
 <script>
 import axios from "axios";
 import BaseButton from "../../components/UI/BaseButton.vue";
+import LoadingSpinner from "../../components/UI/LoadingSpinner.vue";
 // import { Loader } from "@googlemaps/js-api-loader";
 export default {
-  components: { BaseButton },
+  components: { BaseButton, LoadingSpinner },
   props: ["id"],
   data() {
     return {
@@ -299,84 +268,6 @@ export default {
   color: black;
 }
 
-.spinnerDiv {
-  display: flex;
-  justify-content: center;
-}
-#googleIcon {
-  animation: spin 2s linear infinite alternate;
-  position: absolute;
-  top: 20vh;
-  z-index: 6;
-  /* border-top: 5px solid blue;
-  border-right: 5px solid green;
-  border-bottom: 5px solid red;
-  border-left: 5px solid yellow; */
-  padding: 0 8px 0 8px;
-  border-radius: 50%;
-  height: 8rem;
-}
-@keyframes spin {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(360deg);
-  }
-}
-.dit-1 {
-  color: #f3301c;
-  font-size: 3rem;
-  z-index: 0;
-  margin: 2px;
-  animation-name: dot;
-  animation-delay: 0.1s;
-  animation-direction: alternate;
-  animation-duration: 0.7s;
-  animation-iteration-count: infinite;
-}
-.dit-2 {
-  color: #2ad958;
-  font-size: 3rem;
-  z-index: 0;
-  margin: 2px;
-  animation-name: dot;
-  animation-delay: 0.2s;
-  animation-direction: alternate;
-  animation-duration: 0.7s;
-  animation-iteration-count: infinite;
-}
-.dit-3 {
-  color: #eafc0e;
-  font-size: 3rem;
-  z-index: 0;
-  margin: 2px;
-  animation-name: dot;
-  animation-delay: 0.3s;
-  animation-direction: alternate;
-  animation-duration: 0.7s;
-  animation-iteration-count: infinite;
-}
-.dit-4 {
-  color: #2c85eb;
-  font-size: 3rem;
-  z-index: 0;
-  margin: 2px;
-  animation-name: dot;
-  animation-delay: 0.4s;
-  animation-direction: alternate;
-  animation-duration: 0.7s;
-  animation-iteration-count: infinite;
-}
-/*Dot animation*/
-@keyframes dot {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
 .data {
   position: relative;
   display: flex;
@@ -400,17 +291,6 @@ export default {
   border-radius: 20px;
   height: 25rem;
   overflow: auto;
-}
-.adp-step,
-.adp-text {
-  width: 100%;
-  font-weight: 600;
-}
-.adp-summary {
-  padding: 0 3px 3px 3px;
-  text-align: center;
-  font-size: 1.2rem;
-  font-family: var(--Goldman);
 }
 
 .desc {

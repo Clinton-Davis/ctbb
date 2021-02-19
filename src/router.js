@@ -10,8 +10,8 @@ const router = createRouter({
   routes: [
     { path: "/", name: "home", component: TheHero },
     { path: "/inputform", name: "InputForm", component: InputForm },
-    { path: "/list", name: "TheList", component: TheList },
-    { path: "/details/:id", component: TourDetailsPage, props: true },
+    { path: "/list/:category", component: TheList, props: true },
+    { path: "/details/:category/:id", component: TourDetailsPage, props: true },
   ],
 });
 

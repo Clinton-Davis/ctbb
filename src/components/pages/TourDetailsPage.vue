@@ -1,7 +1,7 @@
 <template>
   <div class="tour_details__container">
     <div class="tour_details__heading">
-      <h1>{{ tourName }}</h1>
+      <h1>{{ tourName }} {{ category }}</h1>
     </div>
     <div class="tour_details__map-desc-wrapper">
       <!-- Image and Info Div  -->
@@ -27,6 +27,8 @@
     </div>
     <div class="tour_details__Btn">
       <base-button @click="hideDesc" mode="full">{{ BtnMessage }}</base-button>
+      <base-button @click="getCategory" mode="full">Back</base-button>
+
       <base-button @click="getUserLocation()" mode="full"
         >Get Directions</base-button
       >
@@ -41,7 +43,7 @@ import LoadingSpinner from "../../components/UI/LoadingSpinner.vue";
 // import { Loader } from "@googlemaps/js-api-loader";
 export default {
   components: { BaseButton, LoadingSpinner },
-  props: ["id"],
+  props: ["id", "category"],
   data() {
     return {
       Google_api_key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY,
@@ -62,6 +64,10 @@ export default {
     this.isLoading = true;
   },
   methods: {
+    getCategory() {
+      this.$store.dispatch("activites/getCategory", { value: this.category });
+      this.$router.push("/list/" + this.category);
+    },
     //* Calling the Map-details with GoogleId
     async GetPlaceDetails() {
       const URL = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?key=${this.Google_api_key}&place_id=${this.googleId}`;
@@ -199,7 +205,6 @@ export default {
         console.log("Your browser does not support geolacation" + this.error);
       }
     },
-
     hideDesc() {
       this.hideDes = !this.hideDes;
     },
@@ -217,6 +222,9 @@ export default {
     },
     googleId() {
       return this.selectedTour.googleId;
+    },
+    Category() {
+      return this.selectedTour.category;
     },
   },
   watch: {

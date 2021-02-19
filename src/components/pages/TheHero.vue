@@ -22,14 +22,10 @@
 
 <script>
 export default {
-  emits: ["category"],
-  data() {
-    return {};
-  },
   methods: {
     getCategory(category) {
       this.$store.dispatch("activites/getCategory", { value: category });
-      this.$router.push("/list");
+      this.$router.push("/list/" + category);
     },
   },
 };

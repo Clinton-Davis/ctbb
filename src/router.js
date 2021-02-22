@@ -4,6 +4,8 @@ import InputForm from "./components/pages/InputForm.vue";
 import TheHero from "./components/pages/TheHero.vue";
 import TheList from "./components/pages/TheList.vue";
 import TourDetailsPage from "./components/pages/TourDetailsPage.vue";
+import GoogleDirections from "./components/pages/GoogleDirections.vue";
+import GoogleMap from "./components/pages/GoogleMap.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,7 +13,13 @@ const router = createRouter({
     { path: "/", name: "home", component: TheHero },
     { path: "/inputform", name: "InputForm", component: InputForm },
     { path: "/list/:category", component: TheList, props: true },
-    { path: "/details/:category/:id", component: TourDetailsPage, props: true },
+    {
+      path: "/details/:category/:id",
+      component: TourDetailsPage,
+      GoogleDirections,
+      GoogleMap,
+      props: true,
+    },
   ],
 });
 

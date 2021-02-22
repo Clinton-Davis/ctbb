@@ -11,25 +11,21 @@
         :style="{ backgroundImage: 'url(' + src + ')' }"
       >
         <transition name="fadeIn">
-          <div v-if="!hideDes" class="desc">
+          <div v-if="!HideDesc" class="desc">
             <p>{{ info }}</p>
           </div>
         </transition>
       </div>
       <!-- GoogleMaps-Dirstions -->
-      <div v-else id="mapDir" ref="mapDir" class="directions">
-        <LoadingSpinner v-if="isLoading" />
-      </div>
+      <GoogleDirections v-else />
       <!-- GoogleMaps-Map  -->
-      <div id="map" ref="mapDiv">
-        <LoadingSpinner v-if="isLoading" />
-      </div>
+      <GoogleMap :googleId="googleId" :getDirections="getDirections" />
     </div>
     <div class="tour_details__Btn">
       <base-button @click="hideDesc" mode="full">{{ BtnMessage }}</base-button>
       <base-button @click="goBack" mode="full">Back</base-button>
 
-      <base-button @click="getUserLocation" mode="full"
+      <base-button @click="getDirections" mode="full"
         >Get Directions</base-button
       >
     </div>
@@ -37,19 +33,19 @@
 </template>
 
 <script>
-import axios from "axios";
 import BaseButton from "../../components/UI/BaseButton.vue";
-import LoadingSpinner from "../../components/UI/LoadingSpinner.vue";
+import GoogleMap from "../pages/GoogleMap.vue";
+import GoogleDirections from "../pages/GoogleDirections.vue";
+
 // import { Loader } from "@googlemaps/js-api-loader";
 export default {
-  components: { BaseButton, LoadingSpinner },
+  components: { BaseButton, GoogleDirections, GoogleMap },
   props: ["id", "category"],
   data() {
     return {
-      Google_api_key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY,
       getDirections: false,
       selectedTour: null,
-      hideDes: false,
+      HideDesc: false,
       BtnMessage: "Hide Description",
       error: "",
       isLoading: false,
@@ -59,88 +55,12 @@ export default {
       userLocation: null,
     };
   },
-  mounted() {
-    this.GetPlaceDetails();
-    this.isLoading = true;
-  },
+  mounted() {},
   methods: {
     goBack() {
       this.$router.back();
     },
-    //* Calling the Map-details with GoogleId
-    async GetPlaceDetails() {
-      const URL = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?key=${this.Google_api_key}&place_id=${this.googleId}`;
-      axios
-        .get(URL)
-        .then((response) => {
-          if (response.data.error_message) {
-            this.error = response.data.error_message;
-          } else {
-            const place = response.data.result;
-            return place;
-          }
-        })
-        //* Getting the Data from responce
-        .then((place) => {
-          const data = {
-            lat: place.geometry.location.lat,
-            lng: place.geometry.location.lng,
-            Address: place.formatted_address,
-            Phone: place.international_phone_number,
-            name: place.name,
-            rating: place.rating,
-            website: place.website,
-            total_rating: place.user_ratings_total,
-          };
-          this.Data = data;
 
-          //*Calling Map loader with lat lng.
-          this.getMaps(data.lat, data.lng);
-        })
-        .catch((error) => {
-          this.error = error.message;
-        });
-    },
-    //**Initialise Map*/
-    getMaps(lat, lng) {
-      let map = new window.google.maps.Map(this.$refs["mapDiv"], {
-        center: new window.google.maps.LatLng(lat, lng),
-        zoom: 15,
-        mapTypeId: "hybrid",
-        mapTypeControl: false,
-      });
-      //**Initialise InfoWindow*/
-      const infoWindow = new window.google.maps.InfoWindow();
-      let marker = new window.google.maps.Marker({
-        position: new window.google.maps.LatLng(lat, lng),
-        map: map,
-      });
-      this.Marker = marker;
-      //**Populate InfoWindow */
-      if (
-        this.Data.name === "Kalk Bay" ||
-        this.Data.name === "Constantia" ||
-        this.Data.name === "Bo-Kaap"
-      ) {
-        infoWindow.setContent(
-          `<div class="info_Header"><h2>${this.Data.name}</2h></div>
-            <div class="info_Data"><h5>Address: ${this.Data.Address}</h5><div>
-            `
-        );
-        infoWindow.open(map, marker);
-        this.isLoading = false;
-      } else {
-        infoWindow.setContent(
-          `<div class="info_Header"><h2>${this.Data.name}</2h></div>
-            <div class="info_Data"><h5>Address: ${this.Data.Address}</h5><div>
-            <div v-if="noPhone" class="info_Data"><h5>Phone: ${this.Data.Phone}</h5><div>
-            <div class="info_Data"><h5>Ratings: ${this.Data.rating} /5 <small>Total Ratings ${this.Data.total_rating}</small></h5><div>
-            <a class="info_Data"> <h5>WebSite: ${this.Data.website}</a>`
-        );
-        infoWindow.open(map, marker);
-        this.isLoading = false;
-      }
-    },
     //** Getting User Loaction */
     getUserLocation() {
       this.isLoading = true;
@@ -205,7 +125,7 @@ export default {
       }
     },
     hideDesc() {
-      this.hideDes = !this.hideDes;
+      this.HideDesc = !this.HideDesc;
     },
   },
 
@@ -227,8 +147,8 @@ export default {
     },
   },
   watch: {
-    hideDes() {
-      if (this.hideDes) {
+    HideDesc() {
+      if (this.HideDesc) {
         this.BtnMessage = "Show Description";
       } else {
         this.BtnMessage = "Hide Description";
@@ -264,17 +184,6 @@ export default {
   display: flex;
   /* flex-wrap: wrap; */
 }
-/*Maps*/
-#map {
-  background: rgb(255, 255, 255);
-  width: 50%;
-  height: 25rem;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 20px;
-  color: black;
-}
-
 .data {
   position: relative;
   display: flex;
@@ -287,19 +196,6 @@ export default {
   background-size: cover;
   align-items: flex-end;
 }
-.directions {
-  background-color: rgba(252, 249, 249, 0.8);
-  color: black;
-  position: relative;
-  display: flex;
-  margin: 0.5rem;
-  width: 50%;
-  padding: 0.5rem;
-  border-radius: 20px;
-  height: 25rem;
-  overflow: auto;
-}
-
 .desc {
   display: flex;
   flex-direction: column;
@@ -316,12 +212,6 @@ img {
   padding: 1rem;
   height: 12rem;
 }
-.tour_details__Btn {
-  display: flex;
-  justify-content: space-between;
-  margin: 0.125rem 0rem 0.5rem 0rem;
-}
-
 .fadeIn-enter-active {
   animation: fadeIn 0.6s ease-out;
 }
@@ -339,5 +229,10 @@ img {
     opacity: 1;
     transform: scale(1);
   }
+}
+.tour_details__Btn {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.125rem 0rem 0.5rem 0rem;
 }
 </style>

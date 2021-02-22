@@ -16,6 +16,7 @@ app.component("base-button", BaseButton);
 app.component("list-card", ListCard);
 app.component("weather-modal", WeatherModal);
 
-app.use(store);
 app.use(router);
+app.use(store);
+
 app.mount("#app");

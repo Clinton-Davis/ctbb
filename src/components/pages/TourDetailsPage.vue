@@ -1,7 +1,7 @@
 <template>
   <div class="tour_details__container">
     <div class="tour_details__heading">
-      <h1>{{ tourName }} {{ category }}</h1>
+      <h1>{{ tourName }}</h1>
     </div>
     <div class="tour_details__map-desc-wrapper">
       <!-- Image and Info Div  -->
@@ -27,9 +27,9 @@
     </div>
     <div class="tour_details__Btn">
       <base-button @click="hideDesc" mode="full">{{ BtnMessage }}</base-button>
-      <base-button @click="getCategory" mode="full">Back</base-button>
+      <base-button @click="goBack" mode="full">Back</base-button>
 
-      <base-button @click="getUserLocation()" mode="full"
+      <base-button @click="getUserLocation" mode="full"
         >Get Directions</base-button
       >
     </div>
@@ -64,9 +64,8 @@ export default {
     this.isLoading = true;
   },
   methods: {
-    getCategory() {
-      this.$store.dispatch("activites/getCategory", { value: this.category });
-      this.$router.push("/list/" + this.category);
+    goBack() {
+      this.$router.back();
     },
     //* Calling the Map-details with GoogleId
     async GetPlaceDetails() {

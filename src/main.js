@@ -18,4 +18,5 @@ app.component("weather-modal", WeatherModal);
 
 app.use(store);
 app.use(router);
+
 app.mount("#app");

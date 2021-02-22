@@ -7,6 +7,7 @@
       :name="tour.name"
       :info="tour.info"
       :src="tour.imageUrl"
+      :category="tour.category"
     />
   </div>
 </template>
@@ -22,14 +23,13 @@ export default {
   created() {
     this.loadTours();
   },
-
-  computed: {
-    ...mapGetters("activites", ["loadActivities"]),
-  },
   methods: {
     loadTours() {
       this.$store.dispatch("activites/loadActivities");
     },
+  },
+  computed: {
+    ...mapGetters("activites", ["loadActivities"]),
   },
 };
 </script>

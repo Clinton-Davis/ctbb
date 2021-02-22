@@ -7,10 +7,6 @@
           <div class="name">
             <h3>{{ name }}</h3>
           </div>
-          <!-- <div class="info">
-        <h3>Description</h3>
-        {{ info }}
-      </div> -->
         </div>
       </div>
     </div>
@@ -19,14 +15,10 @@
 
 <script>
 export default {
-  props: ["name", "category", "info", "src", "id", "lat", " lng"],
-  data() {
-    return {};
-  },
-  methods: {},
+  props: ["name", "category", "info", "src", "id"],
   computed: {
     detailsLink() {
-      return "/details/" + this.id;
+      return "/details/" + this.category + "/" + this.id;
     },
   },
 };

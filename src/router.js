@@ -20,6 +20,7 @@ const router = createRouter({
       GoogleMap,
       props: true,
     },
+    { path: "/:notFound(.*)", redirect: "/" },
   ],
 });
 

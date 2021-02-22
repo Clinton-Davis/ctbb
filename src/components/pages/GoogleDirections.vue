@@ -9,21 +9,14 @@ import LoadingSpinner from "../UI/LoadingSpinner.vue";
 export default {
   components: { LoadingSpinner },
 
-  props: ["loadRoutes", "mapResponse"],
+  props: ["mapResponse"],
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
     };
   },
   watch: {
-    loadRoutes(val) {
-      if (this.loadRoutes) {
-        console.log("GoogleDirectionsWatcher= " + val);
-        // this.getRoute();
-      } else return;
-    },
     mapResponse(response) {
-      console.log(response);
       this.getTextRoute(response);
     },
   },

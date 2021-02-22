@@ -100,8 +100,6 @@ export default {
               lng: position.coords.longitude,
             };
 
-            const directionsService = new window.google.maps.DirectionsService();
-            const destination = this.googleId;
             const center = new window.google.maps.LatLng(
               userLocation.lat,
               userLocation.lng
@@ -117,7 +115,6 @@ export default {
               mapOptions
             );
             let marker = new window.google.maps.Marker({
-              // new window.google.maps.Marker({
               position: new window.google.maps.LatLng(
                 userLocation.lat,
                 userLocation.lng
@@ -125,6 +122,8 @@ export default {
               map: map,
             });
 
+            const destination = this.googleId;
+            const directionsService = new window.google.maps.DirectionsService();
             const directionsRenderer = new window.google.maps.DirectionsRenderer();
             let request = {
               origin: marker.position,
@@ -133,10 +132,10 @@ export default {
             };
             directionsService.route(request, (response, status) => {
               if (status === "OK") {
+                //* Calls sendResponce method and emits response data to Details page
                 this.sendResponce(response);
                 directionsRenderer.setDirections(response);
                 directionsRenderer.setMap(map);
-                // directionsRenderer.setPanel(this.$refs["mapDir"]);
               }
             });
           },

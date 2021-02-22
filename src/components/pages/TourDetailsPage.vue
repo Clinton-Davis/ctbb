@@ -6,7 +6,7 @@
     <div class="tour_details__map-desc-wrapper">
       <!-- Image and Info Div  -->
       <div
-        v-if="!getDirections"
+        v-if="!loadRoutes"
         class="data"
         :style="{ backgroundImage: 'url(' + src + ')' }"
       >
@@ -17,17 +17,23 @@
         </transition>
       </div>
       <!-- GoogleMaps-Dirstions -->
-      <GoogleDirections v-else />
+      <GoogleDirections
+        :mapResponse="mapResponse"
+        :loadRoutes="loadRoutes"
+        v-else
+      />
       <!-- GoogleMaps-Map  -->
-      <GoogleMap :googleId="googleId" :getDirections="getDirections" />
+      <GoogleMap
+        :googleId="googleId"
+        :loadRoutes="loadRoutes"
+        @get-response="sendResponse"
+      />
     </div>
     <div class="tour_details__Btn">
       <base-button @click="hideDesc" mode="full">{{ BtnMessage }}</base-button>
       <base-button @click="goBack" mode="full">Back</base-button>
 
-      <base-button @click="getDirections" mode="full"
-        >Get Directions</base-button
-      >
+      <base-button @click="getRoute" mode="full">Get Directions</base-button>
     </div>
   </div>
 </template>
@@ -48,84 +54,30 @@ export default {
       HideDesc: false,
       BtnMessage: "Hide Description",
       error: "",
-      isLoading: false,
       Data: null,
       noPhone: false,
       Marker: null,
       userLocation: null,
+      loadRoutes: false,
+      mapResponse: null,
     };
   },
-  mounted() {},
+
   methods: {
     goBack() {
       this.$router.back();
     },
-
-    //** Getting User Loaction */
-    getUserLocation() {
-      this.isLoading = true;
-      this.getDirections = true;
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const userLocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-
-            const directionsService = new window.google.maps.DirectionsService();
-            const destination = this.selectedTour.googleId;
-            const center = new window.google.maps.LatLng(
-              userLocation.lat,
-              userLocation.lng
-            );
-            let mapOptions = {
-              zoom: 15,
-              center: center,
-              mapTypeId: "hybrid",
-              mapTypeControl: false,
-            };
-            let map = new window.google.maps.Map(
-              this.$refs["mapDiv"],
-              mapOptions
-            );
-            let marker = new window.google.maps.Marker({
-              // new window.google.maps.Marker({
-              position: new window.google.maps.LatLng(
-                userLocation.lat,
-                userLocation.lng
-              ),
-              map: map,
-            });
-
-            let request = {
-              origin: marker.position,
-              destination: { placeId: destination },
-              travelMode: "DRIVING",
-            };
-            const directionsRenderer = new window.google.maps.DirectionsRenderer();
-            directionsService.route(request, (response, status) => {
-              if (status === "OK") {
-                directionsRenderer.setDirections(response);
-                directionsRenderer.setMap(map);
-                directionsRenderer.setPanel(this.$refs["mapDir"]);
-                this.getDirections = true;
-                this.isLoading = false;
-              }
-            });
-          },
-          (error) => {
-            console.log(error);
-            this.error = " Unable to find you.";
-          }
-        );
-      } else {
-        // this.error = error.message;
-        console.log("Your browser does not support geolacation" + this.error);
-      }
+    sendResponse(response) {
+      this.mapResponse = response;
+      console.log("DetailPage " + this.mapResponse);
     },
+
     hideDesc() {
       this.HideDesc = !this.HideDesc;
+    },
+    getRoute() {
+      this.loadRoutes = true;
+      console.log("From method =" + this.loadRoutes);
     },
   },
 

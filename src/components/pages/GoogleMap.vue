@@ -9,7 +9,8 @@ import axios from "axios";
 import LoadingSpinner from "../UI/LoadingSpinner.vue";
 export default {
   components: { LoadingSpinner },
-  props: ["googleId", "getUserLocation"],
+  props: ["googleId", "loadRoutes"],
+  emits: ["get-response"],
   data() {
     return {
       Google_api_key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY,
@@ -33,7 +34,6 @@ export default {
       })
       //* Getting the Data from responce
       .then((place) => {
-        console.log(place);
         const data = {
           lat: place.geometry.location.lat,
           lng: place.geometry.location.lng,
@@ -62,9 +62,9 @@ export default {
         this.Marker = marker;
         //**Populate InfoWindow */
         if (
-          this.data.name === "Kalk Bay" ||
-          this.data.name === "Constantia" ||
-          this.data.name === "Bo-Kaap"
+          this.Data.name === "Kalk Bay" ||
+          this.Data.name === "Constantia" ||
+          this.Data.name === "Bo-Kaap"
         ) {
           infoWindow.setContent(
             `<div class="info_Header"><h2>${this.Data.name}</2h></div>
@@ -83,12 +83,84 @@ export default {
           );
           infoWindow.open(map, marker);
           this.isLoading = false;
-          console.log("Got here");
         }
       })
       .catch((error) => {
         this.error = error.message;
       });
+  },
+  methods: {
+    //** Getting User Loaction */
+    getRoute() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+
+            const directionsService = new window.google.maps.DirectionsService();
+            const destination = this.googleId;
+            const center = new window.google.maps.LatLng(
+              userLocation.lat,
+              userLocation.lng
+            );
+            let mapOptions = {
+              zoom: 15,
+              center: center,
+              mapTypeId: "hybrid",
+              mapTypeControl: false,
+            };
+            let map = new window.google.maps.Map(
+              this.$refs["mapDiv"],
+              mapOptions
+            );
+            let marker = new window.google.maps.Marker({
+              // new window.google.maps.Marker({
+              position: new window.google.maps.LatLng(
+                userLocation.lat,
+                userLocation.lng
+              ),
+              map: map,
+            });
+
+            const directionsRenderer = new window.google.maps.DirectionsRenderer();
+            let request = {
+              origin: marker.position,
+              destination: { placeId: destination },
+              travelMode: "DRIVING",
+            };
+            directionsService.route(request, (response, status) => {
+              if (status === "OK") {
+                this.sendResponce(response);
+                directionsRenderer.setDirections(response);
+                directionsRenderer.setMap(map);
+                // directionsRenderer.setPanel(this.$refs["mapDir"]);
+              }
+            });
+          },
+          (error) => {
+            console.log(error);
+            this.error = " Unable to find you.";
+          }
+        );
+      } else {
+        // this.error = error.message;
+        console.log("Your browser does not support geolacation" + this.error);
+      }
+    },
+    sendResponce(response) {
+      this.$emit("get-response", response);
+    },
+  },
+  watch: {
+    loadRoutes(val) {
+      if (this.loadRoutes) {
+        console.log("MapsWatcher= " + val);
+        this.getRoute();
+      } else return;
+    },
   },
 };
 </script>

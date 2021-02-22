@@ -8,6 +8,33 @@
 import LoadingSpinner from "../UI/LoadingSpinner.vue";
 export default {
   components: { LoadingSpinner },
+
+  props: ["loadRoutes", "mapResponse"],
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
+  watch: {
+    loadRoutes(val) {
+      if (this.loadRoutes) {
+        console.log("GoogleDirectionsWatcher= " + val);
+        // this.getRoute();
+      } else return;
+    },
+    mapResponse(response) {
+      console.log(response);
+      this.getTextRoute(response);
+    },
+  },
+  methods: {
+    getTextRoute(response) {
+      const directionsRenderer = new window.google.maps.DirectionsRenderer();
+      directionsRenderer.setDirections(response);
+      directionsRenderer.setPanel(this.$refs["mapDir"]);
+      this.isLoading = false;
+    },
+  },
 };
 </script>
 

@@ -30,10 +30,14 @@
       />
     </div>
     <div class="tour_details__Btn">
-      <base-button @click="hideDesc" mode="full">{{ BtnMessage }}</base-button>
+      <base-button @click="hideDesc" v-show="!loadRoutes" mode="full">{{
+        BtnMessage
+      }}</base-button>
       <base-button @click="goBack" mode="full">Back</base-button>
 
-      <base-button @click="getRoute" mode="full">Get Directions</base-button>
+      <base-button @click="getRoute" v-show="!loadRoutes" mode="full"
+        >Get Directions</base-button
+      >
     </div>
   </div>
 </template>
@@ -76,8 +80,8 @@ export default {
       this.HideDesc = !this.HideDesc;
     },
     getRoute() {
+      //* Changes loadRoutes witch triggers a watcher in Googlemaps to get Routes
       this.loadRoutes = true;
-      console.log("From method =" + this.loadRoutes);
     },
   },
 
@@ -183,8 +187,9 @@ img {
   }
 }
 .tour_details__Btn {
+  margin-left: auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin: 0.125rem 0rem 0.5rem 0rem;
 }
 </style>

@@ -29,68 +29,94 @@
 
         <li v-if="haveWeather">{{ getWindDirection }}</li>
         <li>
-          <base-button @click="openWeather" mode="small"
-            >Weather Report</base-button
-          >
+          <div v-show="!openWeatherModal" class="weather" @click="openWeather">
+            <img src="../../assets/image/CloudWeather.svg" alt="" />
+          </div>
         </li>
       </ul>
-      <ul class="headerUL">
-        <li class="pointer" id="about">About Us</li>
+      <modal :open="openWeatherModal" @close="closeWeather">
+        <template v-slot:header>
+          <h3>
+            Today Weather Report
+          </h3>
+        </template>
+        <template v-slot:temp>
+          <ul class="modalUl">
+            <li>Current Temp: <br />{{ getWeatherData.temp }}˚C</li>
+            <li>
+              Feels Like: <br />
+              {{ getWeatherData.feels_like }}˚C
+            </li>
+            <!-- <li>Max: <br />{{ getWeatherData.tempsMax }}˚C</li> -->
+            <li>Min: <br />{{ getWeatherData.tempMin }}˚C</li>
+          </ul>
+        </template>
+        <template v-slot:wind>
+          <ul class="modalUl">
+            <li>
+              SunRise <br />
+              {{ getSunRise }}
+            </li>
+            <li>
+              SunSet <br />
+              {{ getSunSet }}
+            </li>
+            <li>Wind Streanth: <br />{{ getWeatherData.wind }} Kph</li>
+            <li>Wind Direction: <br />{{ getWindDirection }}</li>
+          </ul>
+        </template>
+        <template v-slot:cloud>
+          <ul class="modalUl " :class="{ nav_active: navActive }">
+            <li>Humidity: <br />{{ getWeatherData.humidity }}%</li>
+            <li>
+              Atmospheric pressure: <br />{{ getWeatherData.pressure }}
+              <small> hPa</small>
+            </li>
+            <li>Cloud: <br />{{ getWeatherData.cloudDiscrition }}</li>
+          </ul>
+        </template>
+      </modal>
+      <ul class="headerUL underBurger">
+        <li class="pointer" id="about">
+          <router-link to="/about">About Us</router-link>
+        </li>
         <li class="pointer links">
-          <a href="./form.html" id="contact" class="banger">Get In Touch</a>
+          <router-link to="/contact" id="contact">Contact Us</router-link>
         </li>
       </ul>
+      <div class="burger" @click="OpenBurger">
+        <img src="../../assets/image/BurgerCloudA50.svg" alt="" />
+      </div>
+      <modal :open="openBurger" @close="closeBurger">
+        <template v-slot:header>
+          <h2>Menu</h2>
+        </template>
+        <template v-slot:temp>
+          <div class="burgerModal">
+            <router-link to="/about">
+              <h2 class="menu">About Us</h2>
+            </router-link>
+            <router-link to="/contact">
+              <h2 class="menu">Contact Us</h2>
+            </router-link>
+          </div>
+        </template>
+      </modal>
     </nav>
   </header>
-  <weather-modal :open="openModal" @close="closeModal">
-    <template v-slot:temp>
-      <ul class="modalUl">
-        <li>Current Temp: <br />{{ getWeatherData.temp }}˚C</li>
-        <li>
-          Feels Like: <br />
-          {{ getWeatherData.feels_like }}˚C
-        </li>
-        <!-- <li>Max: <br />{{ getWeatherData.tempsMax }}˚C</li> -->
-        <li>Min: <br />{{ getWeatherData.tempMin }}˚C</li>
-      </ul>
-    </template>
-    <template v-slot:wind>
-      <ul class="modalUl">
-        <li>
-          SunRise <br />
-          {{ getSunRise }}
-        </li>
-        <li>
-          SunSet <br />
-          {{ getSunSet }}
-        </li>
-        <li>Wind Streanth: <br />{{ getWeatherData.wind }} Kph</li>
-        <li>Wind Direction: <br />{{ getWindDirection }}</li>
-      </ul>
-    </template>
-    <template v-slot:cloud>
-      <ul class="modalUl">
-        <li>Humidity: <br />{{ getWeatherData.humidity }}%</li>
-        <li>
-          Atmospheric pressure: <br />{{ getWeatherData.pressure }}
-          <small> hPa</small>
-        </li>
-        <li>Cloud: <br />{{ getWeatherData.cloudDiscrition }}</li>
-      </ul>
-    </template>
-  </weather-modal>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import WeatherModal from "./WeatherModal.vue";
+import Modal from "./Modal.vue";
 export default {
-  components: { WeatherModal },
+  components: { Modal },
   data() {
     return {
       haveWeather: false,
       feels_like: null,
-      openModal: false,
+      openWeatherModal: false,
+      openBurger: false,
       sunRise: null,
     };
   },
@@ -99,24 +125,20 @@ export default {
   },
   methods: {
     openWeather() {
-      this.openModal = true;
+      this.openWeatherModal = true;
     },
-    closeModal() {
-      this.openModal = false;
+    closeWeather() {
+      this.openWeatherModal = false;
+    },
+    OpenBurger() {
+      this.openBurger = true;
+    },
+    closeBurger() {
+      this.openBurger = false;
     },
     loadWeather() {
       this.$store.dispatch("weather/loadWeather");
     },
-    // sunUps(getSunRise) {
-    // console.log(getSunRise);
-    // let rdate = new Date(getSunRise * 1000);
-    // let rh = rdate.getHours();
-    // let rhours = rh + 2;
-    // let rminutes = "0" + rdate.getMinutes();
-    // let sunRise = rhours + ":" + rminutes.substr(-2);
-    // console.log(sunRise);
-    // return sunRise;
-    // },
   },
   computed: {
     ...mapGetters("weather", [
@@ -154,13 +176,17 @@ nav {
   color: var(--white);
 }
 img {
-  margin: 1rem;
   vertical-align: super;
 }
-
+#tableIcon {
+  margin: 0.5rem 0.5rem 0 0.5rem;
+}
 .headerUL {
   display: flex;
   margin: 1rem 5rem 1rem 0;
+}
+.underBurger {
+  display: flex;
 }
 .modalUl {
   display: flex;
@@ -168,6 +194,17 @@ img {
   justify-content: space-evenly;
   text-align: center;
 }
+.burgerModal {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  text-align: center;
+  margin-top: 10%;
+}
+.menu {
+  text-shadow: 3px 5px 2px #09587c;
+}
+
 li {
   font-family: var(--Goldman);
   list-style: none;
@@ -178,10 +215,57 @@ a {
   text-decoration: none;
   color: var(--white);
   font-family: inherit;
+  cursor: pointer;
 }
 #windsock {
   margin-right: -0.1rem;
   padding-bottom: 11px;
+}
+.burger {
+  display: none;
+  cursor: pointer;
+  transition: all 0.5s ease-in;
+  -webkit-transition: all 0.5s ease-in;
+  -moz-transition: all 0.5s ease-in;
+  -ms-transition: all 0.5s ease-in;
+  -o-transition: all 0.5s ease-in;
+}
+.burger img {
+  width: 100%;
+  height: 2rem;
+}
+.weather img {
+  width: 100%;
+  height: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.weather:active {
+  transform: scale(0.8);
+}
+
+@media screen and (max-width: 980px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .burger {
+    display: block;
+  }
+  .underBurger {
+    display: none;
+  }
+}
+@media screen and (max-width: 477px) {
+  #tableIcon {
+    display: none;
+  }
+  .headerUL {
+    margin: 1rem 1rem 1rem 0;
+  }
+  .header {
+    font-size: 1rem;
+  }
 }
 template ul {
   width: 100%;

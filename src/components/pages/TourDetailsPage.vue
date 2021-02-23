@@ -11,10 +11,15 @@
         :style="{ backgroundImage: 'url(' + src + ')' }"
       >
         <transition name="fadeIn">
-          <div v-if="!HideDesc" class="desc">
+          <div @click="hideDesc" v-if="!HideDesc" class="desc">
             <p>{{ info }}</p>
+            <small class="smallhide">Hide</small>
           </div>
         </transition>
+
+        <div @click="hideDesc" class="desc">
+          <small v-if="HideDesc" class="smallhide">Show</small>
+        </div>
       </div>
       <!-- GoogleMaps-Dirstions -->
       <GoogleDirections
@@ -30,9 +35,9 @@
       />
     </div>
     <div class="tour_details__Btn">
-      <base-button @click="hideDesc" v-show="!loadRoutes" mode="full">{{
+      <!-- <base-button @click="hideDesc" v-show="!loadRoutes" mode="full">{{
         BtnMessage
-      }}</base-button>
+      }}</base-button> -->
       <base-button @click="goBack" mode="full">Back</base-button>
 
       <base-button @click="getRoute" v-show="!loadRoutes" mode="full"
@@ -128,6 +133,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(5px);
   width: 80%;
+  max-width: 60rem;
   margin: 0.5rem auto;
   border-radius: 20px;
 }
@@ -164,6 +170,10 @@ export default {
   display: flex;
   padding: 1rem;
 }
+.smallhide {
+  padding: 0.25rem 1rem;
+  font-weight: 600;
+}
 img {
   padding: 1rem;
   height: 12rem;
@@ -180,16 +190,34 @@ img {
   from {
     opacity: 0;
     transform: scale(0.01);
+    /* transform: translate(100px); */
   }
   to {
     opacity: 1;
     transform: scale(1);
+    /* transform: translateX(0px); */
   }
 }
 .tour_details__Btn {
-  margin-left: auto;
+  margin: 0 auto;
   display: flex;
   justify-content: space-evenly;
   margin: 0.125rem 0rem 0.5rem 0rem;
+}
+@media screen and (max-width: 800px) {
+  .tour_details__map-desc-wrapper {
+    flex-wrap: wrap;
+  }
+  .data {
+    width: 99%;
+  }
+  .tour_details__container {
+    width: 99%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .tour_details__Btn {
+    display: block;
+  }
 }
 </style>

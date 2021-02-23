@@ -174,4 +174,9 @@ export default {
   border-radius: 20px;
   color: black;
 }
+@media screen and (max-width: 800px) {
+  #map {
+    width: 99%;
+  }
+}
 </style>

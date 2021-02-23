@@ -64,7 +64,6 @@ export default {
 #capeTown {
   font-size: 8rem;
   font-family: var(--Goldman);
-
   color: transparent;
   font-weight: 700;
   background-size: 100%;
@@ -96,5 +95,54 @@ export default {
   background-position: 100% 20%;
   -webkit-background-clip: text;
   background-image: url("../../assets/image/BigBlueOceanLiternt.jpg");
+}
+@media screen and (min-width: 600px) and (max-width: 1000px) {
+  #capeTown {
+    font-size: 6rem;
+    margin: 2rem auto 1rem auto;
+  }
+  #bestBits {
+    font-size: 5rem;
+    margin: 0 auto 2rem auto;
+  }
+  #diy {
+    font-size: 2rem;
+  }
+}
+@media screen and (min-width: 400px) and (max-width: 600px) {
+  #capeTown {
+    font-size: 4rem;
+    margin: 3rem 0 0 0;
+  }
+  #bestBits {
+    font-size: 4rem;
+    margin: 0 0 2rem 0;
+  }
+  #diy {
+    font-size: 2rem;
+  }
+  .hero_btn_btns-wrapper {
+    width: 60%;
+    margin: 2rem auto;
+    display: block;
+  }
+}
+@media screen and (max-width: 400px) {
+  #capeTown {
+    font-size: 3rem;
+    margin: 3rem 0 0 0;
+  }
+  #bestBits {
+    font-size: 3rem;
+    margin: 0 0 2rem 0;
+  }
+  #diy {
+    font-size: 2rem;
+  }
+  .hero_btn_btns-wrapper {
+    width: 80%;
+    margin: 2rem auto;
+    display: block;
+  }
 }
 </style>

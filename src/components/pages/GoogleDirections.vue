@@ -44,4 +44,9 @@ export default {
   height: 25rem;
   overflow: auto;
 }
+@media screen and (max-width: 800px) {
+  .directions {
+    width: 99%;
+  }
+}
 </style>

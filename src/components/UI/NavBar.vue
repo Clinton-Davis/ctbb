@@ -29,9 +29,9 @@
 
         <li v-if="haveWeather">{{ getWindDirection }}</li>
         <li>
-          <base-button @click="openWeather" mode="small"
-            >Weather Report</base-button
-          >
+          <div v-show="!openWeatherModal" class="weather" @click="openWeather">
+            <img src="../../assets/image/CloudWeather.svg" alt="" />
+          </div>
         </li>
       </ul>
       <modal :open="openWeatherModal" @close="closeWeather">
@@ -178,7 +178,9 @@ nav {
 img {
   vertical-align: super;
 }
-
+#tableIcon {
+  margin: 0.5rem 0.5rem 0 0.5rem;
+}
 .headerUL {
   display: flex;
   margin: 1rem 5rem 1rem 0;
@@ -231,6 +233,15 @@ a {
 .burger img {
   width: 100%;
   height: 2rem;
+}
+.weather img {
+  width: 100%;
+  height: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.weather:active {
+  transform: scale(0.8);
 }
 
 @media screen and (max-width: 980px) {

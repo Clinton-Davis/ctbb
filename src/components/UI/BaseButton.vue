@@ -118,7 +118,7 @@ button:active {
 @media screen and (max-width: 600px) {
   .full {
     padding: 0.5rem 1rem;
-    min-width: 100%;
+    width: 90%;
     margin: 1rem 1rem;
   }
 }

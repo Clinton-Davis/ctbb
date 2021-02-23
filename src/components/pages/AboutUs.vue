@@ -89,7 +89,6 @@ export default {
   box-shadow: 0px 2px 21px -1px rgba(0, 0, 0, 1),
     0px 2px 21px -1px rgba(0, 0, 0, 1) inset;
   background-size: cover;
-
   border-radius: 20px;
 }
 .about__info h2 {
@@ -101,5 +100,15 @@ export default {
 .about__info p {
   color: black;
   font-size: 1.1rem;
+}
+@media screen and (max-width: 800px) {
+  .form__wrapper {
+    width: 85%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .form__wrapper {
+    width: 99%;
+  }
 }
 </style>

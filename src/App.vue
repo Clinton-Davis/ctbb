@@ -94,4 +94,9 @@ p {
     font-size: 1.2rem;
   }
 }
+@media screen and (min-width: 3000px) {
+  html {
+    font-size: 1.5rem;
+  }
+}
 </style>

@@ -77,9 +77,11 @@
         </template>
       </modal>
       <ul class="headerUL underBurger">
-        <li class="pointer" id="about">About Us</li>
+        <li class="pointer" id="about">
+          <router-link to="/about">About Us</router-link>
+        </li>
         <li class="pointer links">
-          <router-link to="/contact" id="contact">Get In Touch</router-link>
+          <router-link to="/contact" id="contact">Contact Us</router-link>
         </li>
       </ul>
       <div class="burger" @click="OpenBurger">

@@ -35,9 +35,11 @@ a {
   backdrop-filter: blur(5px);
   margin: 1rem;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 .card__wrapper:hover {
-  transform: scale(1.01);
+  box-shadow: 0px 2px 21px -1px rgba(0, 0, 0, 1),
+    0px 2px 21px -1px rgba(0, 0, 0, 1) inset;
 }
 h3 {
   text-align: center;

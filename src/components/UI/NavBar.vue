@@ -222,8 +222,8 @@ a {
   cursor: pointer;
 }
 #windsock {
-  margin-right: -0.1rem;
-  padding-bottom: 11px;
+  height: 2rem;
+  margin-top: 1rem;
 }
 .burger {
   display: none;

@@ -22,7 +22,7 @@ export default {
     //* Calling the Map-details with GoogleId
     this.isLoading = true;
     // const URL = `http://localhost:8080/maps/api/place/details/json?key=${this.Google_api_key}&place_id=${this.googleId}`;
-    const URL = `https://lucid-villani-555a83.netlify.app/maps.googleapis.com/maps/api/place/details/json?key=${this.Google_api_key}&place_id=${this.googleId}`;
+    const URL = `https://lucid-villani-555a83.netlify.app/maps/api/place/details/json?key=${this.Google_api_key}&place_id=${this.googleId}`;
     // const URL = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?key=${this.Google_api_key}&place_id=${this.googleId}`;
     axios
       .get(URL)

@@ -5,6 +5,6 @@
  */
 module.exports = {
   devServer: {
-    proxy: "https://maps.googleapis.com",
+    proxy: "https://lucid-villani-555a83.netlify.app",
   },
 };

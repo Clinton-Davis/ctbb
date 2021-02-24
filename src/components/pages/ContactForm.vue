@@ -8,11 +8,11 @@
           title="Back Buttom"
         />
       </div>
-      <div class="form-control">
+      <div v-if="!sent" class="form-control">
         <div v-if="invalidInput" class="Error">
           <p>Error Please Check inputs</p>
         </div>
-        <form @submit.prevent="formValidaty">
+        <form @submit.prevent="sendEmail">
           <div class="form-control">
             <label for="name">Your Name:</label>
             <input
@@ -21,6 +21,7 @@
               id="name"
               v-model.trim="name"
               title="Your Name"
+              required
             />
           </div>
           <div class="form-control">
@@ -31,6 +32,7 @@
               id="email"
               v-model.trim="email"
               title="Your Email"
+              required
             />
           </div>
           <div class="form-control">
@@ -40,9 +42,37 @@
               id="message"
               v-model="message"
               title="Your Message"
+              required
             />
           </div>
-          <base-button mode="form" title="Send Message">Send</base-button>
+          <div id="botCheck">
+            <img
+              id="bot-img"
+              src="../../assets/image/email-token2.svg"
+              alt="Human Test"
+            />
+            <label for="notBot"
+              >Please type the word above in the box below</label
+            ><br />
+            <input
+              type="text"
+              id="notBot"
+              name="notBot"
+              class="inputStyle"
+              placeholder="Check to see if you are a human"
+              required
+              v-model="humanInput"
+            />
+          </div>
+          <base-button
+            type="submit"
+            v-show="humanCheck"
+            class="btn"
+            mode="form"
+            title="Send Message"
+            value="send"
+            >Send</base-button
+          >
         </form>
         <!-- <div  class="success"></div> -->
       </div>
@@ -51,10 +81,44 @@
 </template>
 
 <script>
+import emailjs from "emailjs-com";
 export default {
+  data() {
+    return {
+      humanCheck: false,
+      humanInput: "",
+      name: "",
+      email: "",
+      message: "",
+      sent: false,
+    };
+  },
+  watch: {
+    humanInput() {
+      if (this.humanInput === "stormers") {
+        this.humanCheck = true;
+      } else {
+        this.humanCheck = false;
+      }
+    },
+  },
   methods: {
     goBack() {
       this.$router.back();
+    },
+    sendEmail: (e) => {
+      emailjs.sendForm("CTBB", "template_rgh9nfp", e.target).then(
+        (result) => {
+          console.log("SUCCESS!", result.status, result.text);
+          alert("Your message has been sent");
+        },
+        (error) => {
+          console.log("FAILED...", error);
+        }
+      );
+    },
+    function() {
+      console.log("got this");
     },
   },
 };
@@ -91,6 +155,7 @@ export default {
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
 }
 form {
   margin: 2rem auto;
@@ -104,7 +169,9 @@ form {
   box-shadow: 0px 2px 21px -1px rgba(0, 0, 0, 1),
     0px 2px 21px -1px rgba(0, 0, 0, 1) inset;
 }
-
+.btn {
+  margin: 1rem 0;
+}
 .form-control {
   margin: 0.5rem 0;
   position: relative;
@@ -121,6 +188,10 @@ form {
 .clips {
   text-align: center;
   cursor: pointer;
+}
+#bot-img {
+  display: block;
+  width: 5rem;
 }
 h2 {
   font-size: 1rem;

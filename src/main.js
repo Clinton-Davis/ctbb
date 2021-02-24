@@ -1,6 +1,6 @@
 import App from "./App.vue";
 import { createApp } from "vue";
-
+import { init } from "emailjs-com";
 import router from "./router";
 import store from "./store/index.js";
 
@@ -11,7 +11,7 @@ import ListCard from "./components/UI/ListCard.vue";
 import Modal from "./components/UI/Modal.vue";
 
 const app = createApp(App);
-
+init("user_8kWmsIvOjmHcCs7cRI6uz");
 app.component("nav-bar", NavBar);
 app.component("foot-er", Footer);
 app.component("base-button", BaseButton);

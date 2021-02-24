@@ -4,7 +4,7 @@
       <ul class="headerUL">
         <router-link to="/">
           <img
-            src="../../assets/image/tableMountainIconsmalltranparntRounded.png"
+            src="../../assets/image/NewBetBitLogo.svg"
             id="tableIcon"
             title="'Click' Back to Main Page"
             alt="table Mountain Icons"
@@ -29,7 +29,7 @@
 
         <li v-if="haveWeather">{{ getWindDirection }}</li>
         <li>
-          <div v-show="!openWeatherModal" class="weather" @click="openWeather">
+          <div class="weather" @click="openWeather">
             <img src="../../assets/image/CloudWeather.svg" alt="" />
           </div>
         </li>
@@ -85,7 +85,7 @@
         </li>
       </ul>
       <div class="burger" @click="OpenBurger">
-        <img src="../../assets/image/BurgerCloudA50.svg" alt="" />
+        <img src="../../assets/image/QuoteBurgerWhite.svg" alt="" />
       </div>
       <modal :open="openBurger" @close="closeBurger">
         <template v-slot:header>
@@ -93,6 +93,9 @@
         </template>
         <template v-slot:temp>
           <div class="burgerModal">
+            <router-link to="/">
+              <h2 class="menu">Home</h2>
+            </router-link>
             <router-link to="/about">
               <h2 class="menu">About Us</h2>
             </router-link>
@@ -180,6 +183,7 @@ img {
 }
 #tableIcon {
   margin: 0.5rem 0.5rem 0 0.5rem;
+  height: 3rem;
 }
 .headerUL {
   display: flex;
@@ -231,12 +235,12 @@ a {
   -o-transition: all 0.5s ease-in;
 }
 .burger img {
-  width: 100%;
-  height: 2rem;
+  height: 2.5rem;
+  margin-right: 1rem;
 }
 .weather img {
   width: 100%;
-  height: 2rem;
+  height: 2.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -256,10 +260,12 @@ a {
     display: none;
   }
 }
-@media screen and (max-width: 477px) {
+@media screen and (max-width: 640px) {
   #tableIcon {
     display: none;
   }
+}
+@media screen and (max-width: 477px) {
   .headerUL {
     margin: 1rem 1rem 1rem 0;
   }

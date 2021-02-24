@@ -78,7 +78,6 @@ export default {
     },
     sendResponse(response) {
       this.mapResponse = response;
-      console.log("DetailPage " + this.mapResponse);
     },
 
     hideDesc() {

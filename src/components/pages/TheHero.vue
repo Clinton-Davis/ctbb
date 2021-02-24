@@ -1,4 +1,4 @@
-<template>
+<template v-cloak>
   <div class="hero__wrapper">
     <div class="hero__content">
       <h1 id="capeTown">CAPE TOWNS</h1>
@@ -6,7 +6,7 @@
       <h3 id="diy">Self Guided Tours</h3>
       <h4>Pick your Pleasure</h4>
       <div class="hero_btn_btns-wrapper">
-        <base-button mode="full" @click="getCategory('sight_seeing')"
+        <base-button v-cloak mode="full" @click="getCategory('sight_seeing')"
           >Sights Seeing</base-button
         >
         <base-button mode="full" @click="getCategory('adventure')"
@@ -32,6 +32,9 @@ export default {
 </script>
 
 <style scoped>
+[v-cloak] {
+  display: none;
+}
 .hero__wrapper {
   margin-top: 1rem;
   height: 70vh;

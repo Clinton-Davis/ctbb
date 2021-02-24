@@ -36,8 +36,6 @@
           <div class="form-control">
             <label for="message">Your Message:</label>
             <textarea
-              rows="5"
-              cols="70"
               name="message"
               id="message"
               v-model="message"
@@ -145,6 +143,8 @@ input:active {
 textarea {
   transition: 0.2s all ease;
   display: block;
+  width: 100%;
+  font: inherit;
   border-radius: 4px;
 }
 textarea:hover,
@@ -155,5 +155,15 @@ textarea:active {
 }
 label {
   font-family: var(--Goldman);
+}
+@media screen and (max-width: 800px) {
+  .form__wrapper {
+    width: 85%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .form__wrapper {
+    width: 99%;
+  }
 }
 </style>

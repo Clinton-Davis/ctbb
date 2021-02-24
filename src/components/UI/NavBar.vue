@@ -187,6 +187,7 @@ img {
 }
 .headerUL {
   display: flex;
+  justify-content: space-around;
   margin: 1rem 5rem 1rem 0;
 }
 .underBurger {
@@ -260,15 +261,22 @@ a {
     display: none;
   }
 }
+@media screen and (max-width: 780px) {
+  .headerUL {
+    margin: 1rem 1rem 1rem 0;
+  }
+}
 @media screen and (max-width: 640px) {
   #tableIcon {
     display: none;
   }
 }
-@media screen and (max-width: 477px) {
-  .headerUL {
-    margin: 1rem 1rem 1rem 0;
+@media screen and (max-width: 540px) {
+  small {
+    display: none;
   }
+}
+@media screen and (max-width: 477px) {
   .header {
     font-size: 1rem;
   }

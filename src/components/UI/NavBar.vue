@@ -4,7 +4,7 @@
       <ul class="headerUL">
         <router-link to="/">
           <img
-            src="../../assets/image/NewBetBitLogo.svg"
+            src="../../assets/image/newLogo2.svg"
             id="tableIcon"
             title="'Click' Back to Main Page"
             alt="table Mountain Icons"
@@ -182,13 +182,13 @@ img {
   vertical-align: super;
 }
 #tableIcon {
-  margin: 0.5rem 0.5rem 0 0.5rem;
-  height: 3rem;
+  margin: 0 0.5rem;
+  height: 5rem;
 }
 .headerUL {
   display: flex;
   justify-content: space-around;
-  margin: 1rem 5rem 1rem 0;
+  margin: 0.2rem 5rem 0.2rem 0;
 }
 .underBurger {
   display: flex;

@@ -1,5 +1,12 @@
 import App from "./App.vue";
 import { createApp } from "vue";
+import { datadogLogs } from "@datadog/browser-logs";
+datadogLogs.init({
+  clientToken: "pub57efe2b0b0807d6695e98bc096123a2b",
+  site: "datadoghq.eu",
+  forwardErrorsToLogs: true,
+  sampleRate: 100,
+});
 import { init } from "emailjs-com";
 import router from "./router";
 import store from "./store/index.js";

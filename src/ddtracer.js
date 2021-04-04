@@ -1,3 +1,5 @@
 import tracer from "dd-tracer";
-tracer.init();
+const tracer = require("dd-trace").init({
+  logInjection: true,
+});
 export default tracer;

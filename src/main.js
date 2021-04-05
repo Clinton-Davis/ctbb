@@ -7,7 +7,7 @@ datadogLogs.init({
   forwardErrorsToLogs: true,
   sampleRate: 100,
 });
-import tracer from "./tracer";
+import tracer from "./ddtracer.js";
 import { init } from "emailjs-com";
 import router from "./router";
 import store from "./store/index.js";

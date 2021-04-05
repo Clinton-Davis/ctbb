@@ -7,11 +7,9 @@ datadogLogs.init({
   forwardErrorsToLogs: true,
   sampleRate: 100,
 });
-import tracer from "./ddtracer.js";
 import { init } from "emailjs-com";
 import router from "./router";
 import store from "./store/index.js";
-
 import NavBar from "./components/UI/NavBar.vue";
 import Footer from "./components/UI/Footer.vue";
 import BaseButton from "./components/UI/BaseButton.vue";
@@ -19,7 +17,6 @@ import ListCard from "./components/UI/ListCard.vue";
 import Modal from "./components/UI/Modal.vue";
 
 const app = createApp(App);
-app.use(tracer);
 init("user_8kWmsIvOjmHcCs7cRI6uz");
 app.component("nav-bar", NavBar);
 app.component("foot-er", Footer);

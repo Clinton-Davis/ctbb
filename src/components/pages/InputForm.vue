@@ -94,7 +94,7 @@ export default {
           }),
         }
       ).catch((error) => {
-        console.log(error);
+        console.log("InputForm Catch ERROR ", error);
         this.error = error.message;
       });
       this.name = "";

@@ -64,11 +64,15 @@ export default {
   width: 3rem;
   height: 3rem;
 }
+
 .container {
   width: 100%;
+  height: 80vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
+
 .form__wrapper {
   position: relative;
   display: flex;

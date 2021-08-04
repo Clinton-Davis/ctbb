@@ -1,4 +1,5 @@
 <template>
+<div class="form_background_wrapper">
   <div class="container">
     <div class="form__wrapper">
       <div class="backBtn" @click="goBack">
@@ -79,6 +80,7 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -144,8 +146,13 @@ export default {
 }
 .container {
   width: 100%;
+  height: 80vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+.form_background_wrapper {
+  min-height: 100vh;
 }
 .form__wrapper {
   position: relative;

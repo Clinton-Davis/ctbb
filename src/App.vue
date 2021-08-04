@@ -6,8 +6,8 @@
         <component :is="slotProps.Component"></component>
       </transition>
     </router-view>
-  </main>
   <foot-er></foot-er>
+  </main>
 </template>
 
 <script>
@@ -35,17 +35,18 @@ export default {
 html {
   font-size: 16px;
   overflow-x: hidden;
+
 }
 body {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  flex-direction: column;
   background-image: url("./assets/image/capeTownCityBoll1000px.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
 }
 main {
   position: relative;

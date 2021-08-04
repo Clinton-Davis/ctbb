@@ -37,7 +37,7 @@ export default {
 }
 .hero__wrapper {
   margin-top: 1rem;
-  height: 70vh;
+  height: 80vh;
   width: 100%;
   display: flex;
   flex-direction: row;

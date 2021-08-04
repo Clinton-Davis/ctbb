@@ -2,7 +2,7 @@
   <div id="map" ref="mapDiv">
     <LoadingSpinner v-if="isLoading" />
   </div>
-  <a href=""></a>
+
 </template>
 
 <script>

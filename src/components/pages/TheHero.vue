@@ -7,13 +7,13 @@
       <h4>Pick your Pleasure</h4>
       <div class="hero_btn_btns-wrapper">
         <base-button v-cloak mode="full" @click="getCategory('sight_seeing')"
-          >Sightseeing</base-button
+        aria-label="Choose category Sightseeing"  accesskey="s" aria-command-name="link">Sightseeing</base-button
         >
         <base-button mode="full" @click="getCategory('adventure')"
-          >Adventure</base-button
+        aria-label="Choose category Adventure"  accesskey="a" aria-command-name="link">Adventure</base-button
         >
         <base-button mode="full" @click="getCategory('foodie')"
-          >Foodies</base-button
+        aria-label="Choose category Foodies"  accesskey="f" aria-command-name="link">Foodies</base-button
         >
       </div>
     </div>

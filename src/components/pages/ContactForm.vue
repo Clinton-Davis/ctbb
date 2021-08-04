@@ -71,6 +71,7 @@
             mode="form"
             title="Send Message"
             value="send"
+            aria-command-name="button"
             >Send</base-button
           >
         </form>

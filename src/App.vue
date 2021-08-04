@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main lang="en">
     <nav-bar></nav-bar>
     <router-view v-slot="slotProps">
       <transition name="route" mode="out-in">
@@ -7,7 +7,7 @@
       </transition>
     </router-view>
   </main>
-  <Footer />
+  <foot-er></foot-er>
 </template>
 
 <script>
@@ -51,6 +51,7 @@ main {
   position: relative;
   background-color: rgba(0, 0, 0, 0.288);
   min-height: 100vh;
+  max-height: fit-content;
   z-index: 0;
 }
 p {

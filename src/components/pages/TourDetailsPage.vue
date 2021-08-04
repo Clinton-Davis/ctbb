@@ -11,13 +11,13 @@
         :style="{ backgroundImage: 'url(' + src + ')' }"
       >
         <transition name="fadeIn">
-          <div @click="hideDesc" v-if="!HideDesc" class="desc">
+          <div @click="hideDesc" v-if="!HideDesc" class="desc" accesskey="h" rel=canonical>
             <p>{{ info }}</p>
             <small class="smallhide">Hide</small>
           </div>
         </transition>
 
-        <div @click="hideDesc" class="desc">
+        <div @click="hideDesc" accesskey="s" class="desc">
           <small v-if="HideDesc" class="smallhide">Show</small>
         </div>
       </div>
@@ -38,10 +38,10 @@
       <!-- <base-button @click="hideDesc" v-show="!loadRoutes" mode="full">{{
         BtnMessage
       }}</base-button> -->
-      <base-button @click="goBack" mode="full">Back</base-button>
+      <base-button @click="goBack" mode="full" accesskey="b" aria-command-name="button">Back</base-button>
 
       <base-button @click="getRoute" v-show="!loadRoutes" mode="full"
-        >Get Directions</base-button
+        accesskey="d" aria-command-name="button">Get Directions</base-button
       >
     </div>
   </div>

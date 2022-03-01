@@ -10,7 +10,7 @@
 
 ## Demo
 
-A live demo can found **_[Here](https://lucid-villani-555a83.netlify.app)_**
+A live demo can found **_[Here](https://cape-towns-best-bits.netlify.app/)_**
 
 ---
 
